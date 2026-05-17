@@ -281,10 +281,51 @@
       body { background: #fff; }
     }
 
+    /* ── HAMBURGER ── */
+    #hamburger {
+      display: none;
+      background: transparent;
+      border: 2px solid rgba(255,255,255,0.45);
+      color: #fff;
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.3rem;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      flex-shrink: 0;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    #hamburger:hover { background: rgba(255,255,255,0.15); }
+
     /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
+    @media (max-width: 640px) {
       header h1 { font-size: 1.4rem; }
       .meal-label { min-width: 68px; }
+      nav.main-nav {
+        justify-content: flex-start;
+        padding: 0.5rem 1rem;
+        gap: 0;
+      }
+      #hamburger { display: flex; }
+      nav.main-nav button[data-tab] { display: none; }
+      nav.main-nav.open {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.3rem;
+        padding-bottom: 0.7rem;
+      }
+      nav.main-nav.open button[data-tab] {
+        display: flex;
+        width: 100%;
+        border-radius: 8px;
+        justify-content: flex-start;
+        padding: 0.6rem 1rem;
+        font-size: 0.92rem;
+        border-color: rgba(255,255,255,0.25);
+      }
     }
 
     /* ── BACK TO TOP ── */
@@ -322,6 +363,7 @@
 </header>
 
 <nav class="main-nav">
+  <button id="hamburger" aria-label="Open menu" aria-expanded="false">&#9776;</button>
   <button class="active" data-tab="home" onclick="showTab('home', this)">Home</button>
   <button data-tab="meal-plan" onclick="showTab('meal-plan', this)">Meal Plan</button>
   <button data-tab="shopping" onclick="showTab('shopping', this)">Shopping List</button>
@@ -408,7 +450,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Tuna bowl: tuna in water drained (120g), cooked brown rice (100g), mixed salad (250g), avocado (50g), Greek yogurt dressing (30g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Plain Greek yogurt (170g) with berries (80g)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer lemon herb chicken breast (170g raw weight), roasted sweet potato (140g), broccoli and carrots (300g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of dinner chicken, sweet potato, and vegetables; reserve 1 portion for Day 2 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the chicken, sweet potato, and vegetables; eat one portion for dinner tonight and reserve the second for Day 2 lunch.</div>
         </div>
       </div>
 
@@ -420,7 +462,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover airfryer lemon herb chicken breast (from 170g raw weight), roasted sweet potato (140g), broccoli and carrots (300g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Boiled eggs (2, 100g) with cherry tomatoes (100g)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Stovetop lean beef mince tomato breyani-style bowl: extra lean beef mince (170g raw weight), cooked basmati rice (100g), green beans and courgettes (280g), tomato onion mix (80g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of the mince, rice, and vegetables; reserve 1 portion for Day 3 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the mince, rice, and vegetables; eat one portion for dinner tonight and reserve the second for Day 3 lunch.</div>
         </div>
       </div>
 
@@ -432,7 +474,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover lean beef mince bowl: extra lean beef mince (from 170g raw weight), cooked basmati rice (100g), green beans and courgettes (280g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Rice cakes (2, 18g) with low-fat cottage cheese (100g)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Oven-baked hake (180g raw weight), baby potatoes (150g), large salad with lettuce, cucumber, tomato, and beetroot (280g), olive oil dressing (10g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Bake 2 hake fillets with extra potatoes and salad prep; reserve 1 full portion for Day 4 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Bake 2 hake fillets with 2&times; the potatoes and salad prep; eat one full portion for dinner tonight and reserve the second for Day 4 lunch.</div>
         </div>
       </div>
 
@@ -444,7 +486,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover baked hake (from 180g raw weight), baby potatoes (150g), and salad (280g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer peri-peri chicken breast strips (180g raw weight), cooked quinoa (100g), roast butternut and courgettes (300g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of peri-peri chicken, quinoa, and vegetables; reserve 1 portion for Day 5 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the peri-peri chicken, quinoa, and vegetables; eat one portion for dinner tonight and reserve the second for Day 5 lunch.</div>
         </div>
       </div>
 
@@ -456,7 +498,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover peri-peri chicken breast strips (from 180g raw weight), cooked quinoa (100g), roast butternut and courgettes (300g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Plain Greek yogurt (150g) with cinnamon and pear (100g)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Pan-seared salmon fillet (160g raw weight) with lemon and herb seasoning, cooked quinoa (100g), spinach and green beans (300g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of salmon, quinoa, and vegetables; reserve 1 portion for Day 6 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the salmon, quinoa, and vegetables; eat one portion for dinner tonight and reserve the second for Day 6 lunch.</div>
         </div>
       </div>
 
@@ -468,7 +510,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover pan-seared salmon fillet (from 160g raw weight), quinoa (100g), spinach and green beans (300g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Apple (150g) with almonds (20g)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Braai-style sirloin steak (170g raw weight), roast potato wedges (150g), gem squash and salad vegetables (300g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of steak, wedges, and vegetables; reserve 1 portion for Day 7 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the steak, wedges, and vegetables; eat one portion for dinner tonight and reserve the second for Day 7 lunch.</div>
         </div>
       </div>
 
@@ -499,7 +541,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Tuna quinoa bowl: tuna in water drained (120g), cooked quinoa (100g), mixed salad leaves (200g), cucumber (60g), cherry tomatoes (80g), lemon olive oil dressing (10g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Provitas (3, 30g) with low-fat cottage cheese (80g)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer herb-crusted hake fillet (180g raw weight), roasted baby potatoes (150g), broccoli and green beans (300g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 hake portions with baby potatoes and vegetables; reserve 1 full portion for Day 2 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the hake, baby potatoes, and vegetables; eat one full portion for dinner tonight and reserve the second for Day 2 lunch.</div>
         </div>
       </div>
 
@@ -510,8 +552,9 @@
           <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Rice cakes (3, 27g) with peanut butter (20g)</span></div>
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover airfryer herb-crusted hake fillet (from 180g raw weight), roasted baby potatoes (150g), broccoli and green beans (300g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Boiled eggs (2, 100g) with cherry tomatoes (80g)</span></div>
-          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Stovetop lean pork mince tomato herb bowl: lean pork mince (170g raw weight), cooked basmati rice (100g), saut&eacute;ed courgettes and carrots (280g), tomato and herb sauce (80g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of mince, rice, and vegetables; reserve 1 portion for Day 3 lunch.</div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Stovetop extra lean beef mince tomato herb bowl: extra lean beef mince (170g raw weight), cooked basmati rice (100g), saut&eacute;ed courgettes and carrots (280g), tomato and herb sauce (80g)</span></div>
+          <div class="prep-note"><strong>Tomato &amp; Herb Sauce</strong>Brown the mince, add 1&ndash;2 crushed garlic cloves and a small diced onion, then pour in 1 can (400g) chopped or crushed tomatoes. Stir in 1 tsp dried mixed herbs, salt and pepper, and simmer 10&ndash;15 min until thickened. Shortcut: use a low-sugar jarred tomato pasta sauce (under 5g sugar per 100g) with dried herbs stirred in. Avoid sauces with added cream or sugar.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the mince, rice, and vegetables; eat one portion for dinner tonight and reserve the second for Day 3 lunch.</div>
         </div>
       </div>
 
@@ -520,10 +563,10 @@
         <div class="day-card-body">
           <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Overnight oats: rolled oats (45g), plain Greek yogurt (200g), whey protein (30g), chia seeds (10g), sliced apple (100g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Biltong (30g) and an orange (130g)</span></div>
-          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover lean pork mince bowl (from 170g raw weight), basmati rice (100g), courgettes and carrots (280g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover extra lean beef mince bowl (from 170g raw weight), basmati rice (100g), courgettes and carrots (280g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Provitas (2, 20g) with low-fat cottage cheese (100g)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Pan-seared trout fillet with garlic and lemon herbs (170g raw weight), roasted sweet potato (140g), wilted baby spinach and green beans (280g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 trout portions with sweet potato and vegetables; reserve 1 full portion for Day 4 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the trout, sweet potato, and vegetables; eat one full portion for dinner tonight and reserve the second for Day 4 lunch.</div>
         </div>
       </div>
 
@@ -535,7 +578,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover pan-seared trout fillet (from 170g raw weight), roasted sweet potato (140g), baby spinach and green beans (280g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer peri-peri lean pork fillet strips (180g raw weight), cooked brown rice (100g), roasted butternut and courgettes (300g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of pork strips, rice, and vegetables; reserve 1 portion for Day 5 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the pork strips, rice, and vegetables; eat one portion for dinner tonight and reserve the second for Day 5 lunch.</div>
         </div>
       </div>
 
@@ -547,7 +590,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover peri-peri lean pork fillet strips (from 180g raw weight), brown rice (100g), roasted butternut and courgettes (300g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Provitas (3, 30g) with hummus (40g)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Braai-style sirloin or rump steak (170g raw weight), roasted potato wedges (150g), large mixed salad with cucumber, tomato, beetroot, and mixed greens (280g), olive oil dressing (10g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 steak portions with wedges and salad prep; reserve 1 portion for Day 6 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the steak, wedges, and salad; eat one portion for dinner tonight and reserve the second for Day 6 lunch.</div>
         </div>
       </div>
 
@@ -559,7 +602,7 @@
           <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover braai-style steak (from 170g raw weight), roasted potato wedges (150g), large mixed salad (280g)</span></div>
           <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Apple (150g) with almonds (20g)</span></div>
           <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Oven-baked lemon garlic chicken breast (180g raw weight), cooked quinoa (100g), roasted cauliflower, cherry tomatoes and courgettes (300g)</span></div>
-          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 chicken portions with quinoa and vegetables; reserve 1 portion for Day 7 lunch.</div>
+          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the chicken, quinoa, and vegetables; eat one portion for dinner tonight and reserve the second for Day 7 lunch.</div>
         </div>
       </div>
 
@@ -692,10 +735,10 @@
         <div class="shop-item"><input type="checkbox" id="w2s2"><label for="w2s2">Chicken breast<span class="qty">360g &mdash; Days 6, 7</span></label></div>
         <div class="shop-item"><input type="checkbox" id="w2s3"><label for="w2s3">Lean pork fillet (tenderloin)<span class="qty">360g &mdash; Days 4, 5</span></label></div>
         <div class="shop-item"><input type="checkbox" id="w2s4"><label for="w2s4">Fresh trout fillets<span class="qty">340g &mdash; Days 3, 4</span></label></div>
-        <div class="shop-item"><input type="checkbox" id="w2s5"><label for="w2s5">Lean pork mince<span class="qty">340g &mdash; Days 2, 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s5"><label for="w2s5">Extra lean beef mince<span class="qty">500&ndash;680g total &mdash; Days 2, 3 &amp; 7</span></label></div>
         <div class="shop-item"><input type="checkbox" id="w2s6"><label for="w2s6">Sirloin or rump steak<span class="qty">340g &mdash; Days 5, 6</span></label></div>
         <div class="shop-item"><input type="checkbox" id="w2s7"><label for="w2s7">Hake fillets<span class="qty">360g &mdash; Days 1, 2</span></label></div>
-        <div class="shop-item"><input type="checkbox" id="w2s8"><label for="w2s8">Extra lean beef mince<span class="qty">170&ndash;340g &mdash; Day 7</span></label></div>
+
         <div class="shop-item"><input type="checkbox" id="w2s9"><label for="w2s9">Tuna in water<span class="qty">1 can (160&ndash;170g) &mdash; Day 1</span></label></div>
         <div class="shop-item"><input type="checkbox" id="w2s10"><label for="w2s10">Biltong<span class="qty">30&ndash;50g &mdash; Day 3</span></label></div>
         <div class="shop-item"><input type="checkbox" id="w2s11"><label for="w2s11">Whey protein<span class="qty">30g &mdash; Day 3</span></label></div>
@@ -892,7 +935,7 @@
       <ul>
         <li>The same dinner-to-next-lunch system applies &mdash; cook one extra portion each evening to eliminate separate lunch cooking.</li>
         <li>Proteins are listed as raw weight before cooking, except tuna (drained weight) and dairy (served weight).</li>
-        <li>Trout and lean pork (mince and fillet) are the new proteins this week &mdash; both are available at most SA supermarkets.</li>
+        <li>Trout, lean pork fillet strips, and extra lean beef mince are the key proteins this week.</li>
       </ul>
     </div>
 
@@ -902,7 +945,7 @@
       <p style="font-size:0.88rem; color:#555; margin-bottom:0.5rem;">Portion raw proteins before refrigerating. Freeze what you will not use in the first 2&ndash;3 days and thaw in the fridge overnight.</p>
       <ul>
         <li>Hake fillets &rarr; 2 &times; 180g raw portions (Day 1 dinner &amp; Day 2 lunch)</li>
-        <li>Lean pork mince &rarr; 2 &times; 170g raw portions (Day 2 dinner &amp; Day 3 lunch)</li>
+        <li>Extra lean beef mince &rarr; 2 &times; 170g raw portions (Day 2 dinner &amp; Day 3 lunch)</li>
         <li>Trout fillets &rarr; 2 &times; 170g raw portions (Day 3 dinner &amp; Day 4 lunch)</li>
         <li>Lean pork fillet strips &rarr; 2 &times; 180g raw portions (Day 4 dinner &amp; Day 5 lunch)</li>
         <li>Sirloin or rump steak &rarr; 2 &times; 170g raw portions (Day 5 dinner &amp; Day 6 lunch)</li>
@@ -951,7 +994,7 @@
         </thead>
         <tbody>
           <tr><td>Day 1</td><td>Airfryer herb-crusted hake, baby potatoes, broccoli &amp; green beans</td><td>Day 2</td></tr>
-          <tr><td>Day 2</td><td>Lean pork mince tomato herb bowl, basmati rice, courgettes &amp; carrots</td><td>Day 3</td></tr>
+          <tr><td>Day 2</td><td>Extra lean beef mince tomato herb bowl, basmati rice, courgettes &amp; carrots</td><td>Day 3</td></tr>
           <tr><td>Day 3</td><td>Pan-seared trout, roasted sweet potato, baby spinach &amp; green beans</td><td>Day 4</td></tr>
           <tr><td>Day 4</td><td>Peri-peri lean pork fillet strips, brown rice, butternut &amp; courgettes</td><td>Day 5</td></tr>
           <tr><td>Day 5</td><td>Braai-style sirloin/rump steak, potato wedges, mixed salad</td><td>Day 6</td></tr>
@@ -966,7 +1009,7 @@
       <ul>
         <li>Store cooked proteins and starches in sealed containers and use within 2&ndash;3 days</li>
         <li>Trout and hake are more delicate than chicken &mdash; eat their leftovers within 24 hours</li>
-        <li>Freeze raw pork mince and pork fillet strips if you want to buy them fresh mid-week instead</li>
+        <li>Freeze raw pork fillet strips if you want to buy them fresh mid-week instead; beef mince can be bought in one batch and portioned across Days 2, 3, and 7.</li>
         <li>Label all leftover containers by day number to reduce decision fatigue</li>
       </ul>
     </div>
@@ -974,7 +1017,7 @@
     <div class="prep-section">
       <h3>Adherence Tips</h3>
       <ul>
-        <li>If lean pork mince is unavailable, replace with extra lean beef mince or chicken mince at the same weight</li>
+        <li>If extra lean beef mince is unavailable, replace with lean pork mince or chicken mince at the same weight</li>
         <li>If trout is expensive, use hake again &mdash; the flavour profile is different enough to keep variety</li>
         <li>If hunger is high, add 50&ndash;100g extra non-starchy vegetables before adjusting anything else</li>
         <li>If a USN shake day is not practical, swap with a Greek yogurt or cottage cheese-based meal</li>
@@ -1420,6 +1463,11 @@
     document.querySelectorAll('nav.main-nav button').forEach(b => b.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     btn.classList.add('active');
+    const nav = document.querySelector('nav.main-nav');
+    nav.classList.remove('open');
+    const hb = document.getElementById('hamburger');
+    hb.innerHTML = '&#9776;';
+    hb.setAttribute('aria-expanded', 'false');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -1435,6 +1483,14 @@
     document.getElementById(weekPanelId).classList.add('active');
     btn.classList.add('active');
   }
+
+  const hbBtn = document.getElementById('hamburger');
+  hbBtn.addEventListener('click', function () {
+    const nav = document.querySelector('nav.main-nav');
+    const isOpen = nav.classList.toggle('open');
+    this.innerHTML = isOpen ? '&#10005;' : '&#9776;';
+    this.setAttribute('aria-expanded', isOpen);
+  });
 
   const btt = document.getElementById('back-to-top');
   window.addEventListener('scroll', () => {
