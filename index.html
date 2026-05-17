@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>7-Day Kelfit-Style Meal Plan</title>
+  <title>Kelfit-Style Meal Plans &ndash; Week 1 &amp; Week 2</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -24,8 +24,8 @@
     header h1 { font-size: 2rem; letter-spacing: 0.5px; }
     header p  { margin-top: 0.4rem; font-size: 0.95rem; opacity: 0.88; }
 
-    /* ── NAV TABS ── */
-    nav {
+    /* ── MAIN NAV TABS ── */
+    nav.main-nav {
       display: flex;
       justify-content: center;
       gap: 0.5rem;
@@ -36,7 +36,7 @@
       top: 0;
       z-index: 100;
     }
-    nav button {
+    nav.main-nav button {
       background: transparent;
       border: 2px solid rgba(255,255,255,0.4);
       color: #fff;
@@ -46,7 +46,7 @@
       font-size: 0.88rem;
       transition: background 0.2s, border-color 0.2s;
     }
-    nav button:hover, nav button.active {
+    nav.main-nav button:hover, nav.main-nav button.active {
       background: #40916c;
       border-color: #40916c;
     }
@@ -55,8 +55,33 @@
     section { display: none; padding: 2rem 1.5rem; max-width: 1200px; margin: 0 auto; }
     section.active { display: block; }
 
-    h2 { color: #2d6a4f; font-size: 1.4rem; margin-bottom: 1.2rem; border-bottom: 3px solid #40916c; padding-bottom: 0.4rem; }
+    h2 { color: #2d6a4f; font-size: 1.4rem; margin-bottom: 0.8rem; border-bottom: 3px solid #40916c; padding-bottom: 0.4rem; }
     h3 { color: #40916c; font-size: 1.05rem; margin: 1.2rem 0 0.5rem; }
+
+    /* ── WEEK SUB-NAV ── */
+    .week-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.4rem;
+      flex-wrap: wrap;
+    }
+    .week-nav button {
+      background: transparent;
+      border: 2px solid #40916c;
+      color: #40916c;
+      padding: 0.35rem 1.3rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+    .week-nav button:hover, .week-nav button.active {
+      background: #40916c;
+      color: #fff;
+    }
+    .week-panel { display: none; }
+    .week-panel.active { display: block; }
 
     /* ── MEAL PLAN CARDS ── */
     .day-grid {
@@ -219,10 +244,40 @@
     .alt-item::before { content: '\2192\00a0'; color: #52b788; }
     .alt-note { font-size: 0.78rem; color: #888; }
 
+    /* ── HOME LANDING ── */
+    #home { padding-top: 1.6rem; }
+    .home-intro { font-size: 0.95rem; color: #555; margin-bottom: 1.8rem; max-width: 600px; }
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 1.3rem;
+    }
+    .home-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.09);
+      padding: 1.5rem 1.3rem;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .home-card:hover {
+      border-color: #40916c;
+      box-shadow: 0 6px 22px rgba(64,145,108,0.18);
+      transform: translateY(-3px);
+    }
+    .home-card-icon { font-size: 2rem; margin-bottom: 0.55rem; display: block; line-height: 1; }
+    .home-card-title { font-size: 1rem; font-weight: 700; color: #2d6a4f; margin-bottom: 0.3rem; }
+    .home-card-desc { font-size: 0.84rem; color: #666; line-height: 1.5; }
+    @media print { #home { display: none !important; } }
+
     /* ── PRINT ── */
     @media print {
       nav, header p { display: none; }
       section { display: block !important; page-break-after: always; }
+      .week-panel { display: block !important; }
       body { background: #fff; }
     }
 
@@ -262,349 +317,714 @@
 <body>
 
 <header>
-  <h1>7-Day Kelfit-Style Weight Loss Meal Plan</h1>
-  <p>High protein &bull; Moderate carbs &bull; Large vegetable portions &bull; Dinner-to-lunch leftovers flow &bull; SA-friendly foods</p>
+  <h1>Kelfit-Style Weight Loss Meal Plans</h1>
+  <p>Week 1 &amp; Week 2 &bull; High protein &bull; Moderate carbs &bull; Large vegetable portions &bull; Dinner-to-lunch leftovers flow &bull; SA-friendly foods</p>
 </header>
 
-<nav>
-  <button class="active" onclick="showTab('meal-plan', this)">Meal Plan</button>
-  <button onclick="showTab('shopping', this)">Shopping List</button>
-  <button onclick="showTab('prep', this)">Prep Guide</button>
-  <button onclick="showTab('alternatives', this)">Alternatives</button>
-  <button onclick="showTab('overview', this)">Overview</button>
+<nav class="main-nav">
+  <button class="active" data-tab="home" onclick="showTab('home', this)">Home</button>
+  <button data-tab="meal-plan" onclick="showTab('meal-plan', this)">Meal Plan</button>
+  <button data-tab="shopping" onclick="showTab('shopping', this)">Shopping List</button>
+  <button data-tab="prep" onclick="showTab('prep', this)">Prep Guide</button>
+  <button data-tab="alternatives" onclick="showTab('alternatives', this)">Alternatives</button>
+  <button data-tab="drinks" onclick="showTab('drinks', this)">Drinks</button>
+  <button data-tab="exercise" onclick="showTab('exercise', this)">Exercise</button>
+  <button data-tab="overview" onclick="showTab('overview', this)">Overview</button>
 </nav>
 
-<!-- ═══════════════ MEAL PLAN ═══════════════ -->
-<section id="meal-plan" class="active">
-  <h2>7-Day Meal Plan</h2>
-  <div class="day-grid">
+<!-- ═══════════════════════════════════════════
+     HOME
+════════════════════════════════════════════ -->
+<section id="home" class="active">
+  <h2 style="border-bottom:none; margin-bottom:0.3rem;">Welcome to Your Kelfit Plan</h2>
+  <p class="home-intro">Everything you need for sustainable fat loss &mdash; meal plans, shopping, prep, drinks, exercise, and more. Pick a section below to get started.</p>
+  <div class="home-grid">
 
-    <!-- DAY 1 -->
-    <div class="day-card">
-      <div class="day-card-header">Day 1 &mdash; Monday</div>
-      <div class="day-card-body">
-        <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">2 eggs (100g) scrambled with spinach (60g) and mushrooms (80g), low-fat cottage cheese (150g), 1 slice wholewheat toast (40g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Provitas (3, 30g) with low-fat cottage cheese (80g)</span></div>
-        <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Tuna bowl: tuna in water drained (120g), cooked brown rice (100g), mixed salad (250g), avocado (50g), Greek yogurt dressing (30g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Plain Greek yogurt (170g) with berries (80g)</span></div>
-        <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer lemon herb chicken breast (170g raw weight), roasted sweet potato (140g), broccoli and carrots (300g)</span></div>
-        <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of dinner chicken, sweet potato, and vegetables; reserve 1 portion for Day 2 lunch.</div>
-      </div>
+    <div class="home-card" onclick="navigateTo('meal-plan')">
+      <span class="home-card-icon">🍽️</span>
+      <div class="home-card-title">Meal Plan</div>
+      <div class="home-card-desc">Two full 7-day plans with breakfast, snacks, lunch &amp; dinner. Week 1 &amp; Week 2 with a dinner-to-lunch leftovers flow.</div>
     </div>
 
-    <!-- DAY 2 -->
-    <div class="day-card">
-      <div class="day-card-header">Day 2 &mdash; Tuesday</div>
-      <div class="day-card-body">
-        <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water) plus banana (100g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Rice cakes (3, 27g) with peanut butter (20g)</span></div>
-        <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover airfryer lemon herb chicken breast (from 170g raw weight), roasted sweet potato (140g), broccoli and carrots (300g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Boiled eggs (2, 100g) with cherry tomatoes (100g)</span></div>
-        <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Stovetop lean beef mince tomato breyani-style bowl: extra lean beef mince (170g raw weight), cooked basmati rice (100g), green beans and courgettes (280g), tomato onion mix (80g)</span></div>
-        <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of the mince, rice, and vegetables; reserve 1 portion for Day 3 lunch.</div>
-      </div>
+    <div class="home-card" onclick="navigateTo('shopping')">
+      <span class="home-card-icon">🛒</span>
+      <div class="home-card-title">Shopping List</div>
+      <div class="home-card-desc">Complete tick-off shopping lists for Week 1 &amp; Week 2 with quantities and day references.</div>
     </div>
 
-    <!-- DAY 3 -->
-    <div class="day-card">
-      <div class="day-card-header">Day 3 &mdash; Wednesday</div>
-      <div class="day-card-body">
-        <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Overnight oats: rolled oats (45g), plain Greek yogurt (200g), whey protein (30g), chia seeds (10g), apple (100g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Provitas (2, 20g) with cottage cheese (100g)</span></div>
-        <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover lean beef mince bowl: extra lean beef mince (from 170g raw weight), cooked basmati rice (100g), green beans and courgettes (280g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Rice cakes (2, 18g) with low-fat cottage cheese (100g)</span></div>
-        <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Oven-baked hake (180g raw weight), baby potatoes (150g), large salad with lettuce, cucumber, tomato, and beetroot (280g), olive oil dressing (10g)</span></div>
-        <div class="prep-note"><strong>Meal Prep</strong>Bake 2 hake fillets with extra potatoes and salad prep; reserve 1 full portion for Day 4 lunch.</div>
-      </div>
+    <div class="home-card" onclick="navigateTo('prep')">
+      <span class="home-card-icon">🔪</span>
+      <div class="home-card-title">Prep Guide</div>
+      <div class="home-card-desc">Sunday prep session plan, midweek top-up, dinner-to-lunch flow tables, and storage tips.</div>
     </div>
 
-    <!-- DAY 4 -->
-    <div class="day-card">
-      <div class="day-card-header">Day 4 &mdash; Thursday</div>
-      <div class="day-card-body">
-        <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Plain Greek yogurt (200g) with high-protein granola (35g), strawberries (100g), and pumpkin seeds (10g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Biltong (30g) and an orange (130g)</span></div>
-        <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover baked hake (from 180g raw weight), baby potatoes (150g), and salad (280g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water)</span></div>
-        <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer peri-peri chicken breast strips (180g raw weight), cooked quinoa (100g), roast butternut and courgettes (300g)</span></div>
-        <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of peri-peri chicken, quinoa, and vegetables; reserve 1 portion for Day 5 lunch.</div>
-      </div>
+    <div class="home-card" onclick="navigateTo('alternatives')">
+      <span class="home-card-icon">🔄</span>
+      <div class="home-card-title">Alternatives</div>
+      <div class="home-card-desc">Swap any protein, dairy, carb, or vegetable with SA-friendly alternatives that keep the nutritional balance intact.</div>
     </div>
 
-    <!-- DAY 5 -->
-    <div class="day-card">
-      <div class="day-card-header">Day 5 &mdash; Friday</div>
-      <div class="day-card-body">
-        <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">3-egg omelette (150g egg) with tomato (80g), onion (40g), baby spinach (60g), and feta (30g), plus avocado (50g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Provitas (3, 30g) with hummus (40g)</span></div>
-        <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover peri-peri chicken breast strips (from 180g raw weight), cooked quinoa (100g), roast butternut and courgettes (300g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Plain Greek yogurt (150g) with cinnamon and pear (100g)</span></div>
-        <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Pan-seared salmon fillet (160g raw weight) with lemon and herb seasoning, cooked quinoa (100g), spinach and green beans (300g)</span></div>
-        <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of salmon, quinoa, and vegetables; reserve 1 portion for Day 6 lunch.</div>
-      </div>
+    <div class="home-card" onclick="navigateTo('drinks')">
+      <span class="home-card-icon">☕</span>
+      <div class="home-card-title">Drinks</div>
+      <div class="home-card-desc">Water targets, coffee, rooibos, green tea, chai, alcohol, and what to avoid &mdash; with a quick-reference colour-coded table.</div>
     </div>
 
-    <!-- DAY 6 -->
-    <div class="day-card">
-      <div class="day-card-header">Day 6 &mdash; Saturday</div>
-      <div class="day-card-body">
-        <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water) with oats (30g) blended in, plus peanut butter (15g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Rice cakes (3, 27g) with cottage cheese (120g)</span></div>
-        <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover pan-seared salmon fillet (from 160g raw weight), quinoa (100g), spinach and green beans (300g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Apple (150g) with almonds (20g)</span></div>
-        <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Braai-style sirloin steak (170g raw weight), roast potato wedges (150g), gem squash and salad vegetables (300g)</span></div>
-        <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of steak, wedges, and vegetables; reserve 1 portion for Day 7 lunch.</div>
-      </div>
+    <div class="home-card" onclick="navigateTo('exercise')">
+      <span class="home-card-icon">🚴</span>
+      <div class="home-card-title">Exercise</div>
+      <div class="home-card-desc">Walking, trainer cycling, and other light exercise options with heart rate zones, session types, and a weekly structure template.</div>
     </div>
 
-    <!-- DAY 7 -->
-    <div class="day-card">
-      <div class="day-card-header">Day 7 &mdash; Sunday</div>
-      <div class="day-card-body">
-        <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Cottage cheese bowl: low-fat cottage cheese (200g), sliced banana (100g), cinnamon, and peanut butter (15g), plus 2 rice cakes (18g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Provitas (2, 20g) with low-fat cottage cheese (100g)</span></div>
-        <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover braai-style steak bowl: sirloin steak (from 170g raw weight), roast potato wedges (150g), gem squash and salad vegetables (300g)</span></div>
-        <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Plain Greek yogurt (170g) with berries (80g)</span></div>
-        <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Oven-baked chicken breast strips (180g raw weight), cooked brown rice (100g), roast cauliflower, carrots, and broccoli (300g)</span></div>
-        <div class="prep-note"><strong>Meal Prep</strong>Dinner can be doubled to create a ready-made lunch for the following Monday.</div>
-      </div>
+    <div class="home-card" onclick="navigateTo('overview')">
+      <span class="home-card-icon">📖</span>
+      <div class="home-card-title">Overview</div>
+      <div class="home-card-desc">Kelfit principles, nutrition structure, how to rotate the two weeks, and fat-loss adjustment rules.</div>
     </div>
 
-  </div><!-- /.day-grid -->
+  </div>
 </section>
 
-<!-- ═══════════════ SHOPPING LIST ═══════════════ -->
+<!-- ═══════════════════════════════════════════
+     MEAL PLAN
+════════════════════════════════════════════ -->
+<section id="meal-plan">
+  <h2>7-Day Meal Plan</h2>
+
+  <div class="week-nav">
+    <button class="active" onclick="showWeek('meal-plan', 'mp-w1', this)">Week 1</button>
+    <button onclick="showWeek('meal-plan', 'mp-w2', this)">Week 2</button>
+  </div>
+
+  <!-- ── WEEK 1 ── -->
+  <div id="mp-w1" class="week-panel active">
+    <div class="day-grid">
+
+      <div class="day-card">
+        <div class="day-card-header">Day 1 &mdash; Monday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">2 eggs (100g) scrambled with spinach (60g) and mushrooms (80g), low-fat cottage cheese (150g), 1 slice wholewheat toast (40g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Provitas (3, 30g) with low-fat cottage cheese (80g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Tuna bowl: tuna in water drained (120g), cooked brown rice (100g), mixed salad (250g), avocado (50g), Greek yogurt dressing (30g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Plain Greek yogurt (170g) with berries (80g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer lemon herb chicken breast (170g raw weight), roasted sweet potato (140g), broccoli and carrots (300g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of dinner chicken, sweet potato, and vegetables; reserve 1 portion for Day 2 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 2 &mdash; Tuesday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water) plus banana (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Rice cakes (3, 27g) with peanut butter (20g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover airfryer lemon herb chicken breast (from 170g raw weight), roasted sweet potato (140g), broccoli and carrots (300g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Boiled eggs (2, 100g) with cherry tomatoes (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Stovetop lean beef mince tomato breyani-style bowl: extra lean beef mince (170g raw weight), cooked basmati rice (100g), green beans and courgettes (280g), tomato onion mix (80g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of the mince, rice, and vegetables; reserve 1 portion for Day 3 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 3 &mdash; Wednesday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Overnight oats: rolled oats (45g), plain Greek yogurt (200g), whey protein (30g), chia seeds (10g), apple (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Provitas (2, 20g) with cottage cheese (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover lean beef mince bowl: extra lean beef mince (from 170g raw weight), cooked basmati rice (100g), green beans and courgettes (280g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Rice cakes (2, 18g) with low-fat cottage cheese (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Oven-baked hake (180g raw weight), baby potatoes (150g), large salad with lettuce, cucumber, tomato, and beetroot (280g), olive oil dressing (10g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Bake 2 hake fillets with extra potatoes and salad prep; reserve 1 full portion for Day 4 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 4 &mdash; Thursday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Plain Greek yogurt (200g) with high-protein granola (35g), strawberries (100g), and pumpkin seeds (10g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Biltong (30g) and an orange (130g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover baked hake (from 180g raw weight), baby potatoes (150g), and salad (280g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer peri-peri chicken breast strips (180g raw weight), cooked quinoa (100g), roast butternut and courgettes (300g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of peri-peri chicken, quinoa, and vegetables; reserve 1 portion for Day 5 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 5 &mdash; Friday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">3-egg omelette (150g egg) with tomato (80g), onion (40g), baby spinach (60g), and feta (30g), plus avocado (50g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Provitas (3, 30g) with hummus (40g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover peri-peri chicken breast strips (from 180g raw weight), cooked quinoa (100g), roast butternut and courgettes (300g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Plain Greek yogurt (150g) with cinnamon and pear (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Pan-seared salmon fillet (160g raw weight) with lemon and herb seasoning, cooked quinoa (100g), spinach and green beans (300g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of salmon, quinoa, and vegetables; reserve 1 portion for Day 6 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 6 &mdash; Saturday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water) with oats (30g) blended in, plus peanut butter (15g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Rice cakes (3, 27g) with cottage cheese (120g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover pan-seared salmon fillet (from 160g raw weight), quinoa (100g), spinach and green beans (300g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Apple (150g) with almonds (20g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Braai-style sirloin steak (170g raw weight), roast potato wedges (150g), gem squash and salad vegetables (300g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of steak, wedges, and vegetables; reserve 1 portion for Day 7 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 7 &mdash; Sunday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Cottage cheese bowl: low-fat cottage cheese (200g), sliced banana (100g), cinnamon, and peanut butter (15g), plus 2 rice cakes (18g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Provitas (2, 20g) with low-fat cottage cheese (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover braai-style steak bowl: sirloin steak (from 170g raw weight), roast potato wedges (150g), gem squash and salad vegetables (300g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Plain Greek yogurt (170g) with berries (80g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Oven-baked chicken breast strips (180g raw weight), cooked brown rice (100g), roast cauliflower, carrots, and broccoli (300g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Dinner can be doubled to create a ready-made lunch for the following Monday.</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /#mp-w1 -->
+
+  <!-- ── WEEK 2 ── -->
+  <div id="mp-w2" class="week-panel">
+    <div class="day-grid">
+
+      <div class="day-card">
+        <div class="day-card-header">Day 1 &mdash; Monday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">3-egg omelette (150g egg) with mushrooms (80g), baby spinach (60g), and tomato (60g), served with 1 slice rye bread (40g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Plain Greek yogurt (170g) with mixed berries (80g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Tuna quinoa bowl: tuna in water drained (120g), cooked quinoa (100g), mixed salad leaves (200g), cucumber (60g), cherry tomatoes (80g), lemon olive oil dressing (10g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Provitas (3, 30g) with low-fat cottage cheese (80g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer herb-crusted hake fillet (180g raw weight), roasted baby potatoes (150g), broccoli and green beans (300g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 hake portions with baby potatoes and vegetables; reserve 1 full portion for Day 2 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 2 &mdash; Tuesday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water) plus banana (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Rice cakes (3, 27g) with peanut butter (20g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover airfryer herb-crusted hake fillet (from 180g raw weight), roasted baby potatoes (150g), broccoli and green beans (300g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Boiled eggs (2, 100g) with cherry tomatoes (80g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Stovetop lean pork mince tomato herb bowl: lean pork mince (170g raw weight), cooked basmati rice (100g), saut&eacute;ed courgettes and carrots (280g), tomato and herb sauce (80g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of mince, rice, and vegetables; reserve 1 portion for Day 3 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 3 &mdash; Wednesday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Overnight oats: rolled oats (45g), plain Greek yogurt (200g), whey protein (30g), chia seeds (10g), sliced apple (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Biltong (30g) and an orange (130g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover lean pork mince bowl (from 170g raw weight), basmati rice (100g), courgettes and carrots (280g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Provitas (2, 20g) with low-fat cottage cheese (100g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Pan-seared trout fillet with garlic and lemon herbs (170g raw weight), roasted sweet potato (140g), wilted baby spinach and green beans (280g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 trout portions with sweet potato and vegetables; reserve 1 full portion for Day 4 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 4 &mdash; Thursday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Cottage cheese bowl: low-fat cottage cheese (200g), sliced strawberries (120g), pumpkin seeds (10g), 2 rice cakes (18g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Almonds (20g) and a pear (120g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover pan-seared trout fillet (from 170g raw weight), roasted sweet potato (140g), baby spinach and green beans (280g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Airfryer peri-peri lean pork fillet strips (180g raw weight), cooked brown rice (100g), roasted butternut and courgettes (300g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 portions of pork strips, rice, and vegetables; reserve 1 portion for Day 5 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 5 &mdash; Friday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">2 eggs (100g) scrambled with baby spinach (60g), served on 1 slice wholewheat toast (40g) with avocado (50g) and low-fat cottage cheese (80g) on the side</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Plain Greek yogurt (150g) with sliced banana (100g) and cinnamon</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover peri-peri lean pork fillet strips (from 180g raw weight), brown rice (100g), roasted butternut and courgettes (300g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Provitas (3, 30g) with hummus (40g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Braai-style sirloin or rump steak (170g raw weight), roasted potato wedges (150g), large mixed salad with cucumber, tomato, beetroot, and mixed greens (280g), olive oil dressing (10g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 steak portions with wedges and salad prep; reserve 1 portion for Day 6 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 6 &mdash; Saturday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">Greek yogurt parfait: plain Greek yogurt (200g), high-protein granola (35g), mixed berries (100g), chia seeds (10g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Rice cakes (3, 27g) with low-fat cottage cheese (120g) and cherry tomatoes (80g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover braai-style steak (from 170g raw weight), roasted potato wedges (150g), large mixed salad (280g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Apple (150g) with almonds (20g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Oven-baked lemon garlic chicken breast (180g raw weight), cooked quinoa (100g), roasted cauliflower, cherry tomatoes and courgettes (300g)</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Cook 2 chicken portions with quinoa and vegetables; reserve 1 portion for Day 7 lunch.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-card-header">Day 7 &mdash; Sunday</div>
+        <div class="day-card-body">
+          <div class="meal-row"><span class="meal-label">Breakfast</span><span class="meal-content">USN Diet Fuel Ultralean shake (1 serving, approx. 55g powder mixed with water) with rolled oats (30g) blended in, plus peanut butter (15g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 1</span><span class="meal-content">Boiled eggs (2, 100g) with avocado (50g) and cherry tomatoes (80g)</span></div>
+          <div class="meal-row"><span class="meal-label">Lunch</span><span class="meal-content">Leftover lemon garlic chicken breast (from 180g raw weight), quinoa (100g), roasted cauliflower, cherry tomatoes and courgettes (300g)</span></div>
+          <div class="meal-row"><span class="meal-label">Snack 2</span><span class="meal-content">Plain Greek yogurt (170g) with sliced pear (100g) and pumpkin seeds (10g)</span></div>
+          <div class="meal-row"><span class="meal-label">Dinner</span><span class="meal-content">Extra lean beef mince and veggie bowl: beef mince (170g raw weight), cooked basmati rice (100g), saut&eacute;ed baby spinach, broccoli and onion (280g), cumin and coriander spice</span></div>
+          <div class="prep-note"><strong>Meal Prep</strong>Dinner can be doubled to create a ready-made lunch for the following Monday.</div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /#mp-w2 -->
+
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SHOPPING LIST
+════════════════════════════════════════════ -->
 <section id="shopping">
   <h2>Shopping List</h2>
-  <p style="margin-bottom:1.2rem; font-size:0.88rem; color:#555;">Tick items off as you shop. Quantities cover the full 7-day plan with small practical margins.</p>
-  <div class="shop-grid">
 
-    <!-- PROTEIN -->
-    <div class="shop-category">
-      <div class="shop-category-header">Protein</div>
-      <div class="shop-item"><input type="checkbox" id="s1"><label for="s1">Eggs<span class="qty">12 large</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="s2"><label for="s2">Chicken breast<span class="qty">1.2 kg &mdash; Days 1, 2, 4, 5, 7</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="s3"><label for="s3">Salmon fillets<span class="qty">360g &mdash; Days 5, 6</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="s5"><label for="s5">Extra lean beef mince<span class="qty">400g &mdash; Days 2, 3</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="s6"><label for="s6">Sirloin steak<span class="qty">400g &mdash; Days 6, 7</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="s7"><label for="s7">Hake fillets<span class="qty">400g &mdash; Days 3, 4</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="s8"><label for="s8">Tuna in water<span class="qty">1 can (160&ndash;170g) &mdash; Day 1</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="s9"><label for="s9">Biltong<span class="qty">30&ndash;50g &mdash; Day 4</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="s10"><label for="s10">Whey protein<span class="qty">30g &mdash; Day 3</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="s11"><label for="s11">USN Diet Fuel Ultralean<span class="qty">1 tub (min. 165g powder) &mdash; Days 2, 4, 6</span></label></div>
+  <div class="week-nav">
+    <button class="active" onclick="showWeek('shopping', 'shop-w1', this)">Week 1</button>
+    <button onclick="showWeek('shopping', 'shop-w2', this)">Week 2</button>
+  </div>
+
+  <!-- ── WEEK 1 ── -->
+  <div id="shop-w1" class="week-panel active">
+    <p style="margin-bottom:1.2rem; font-size:0.88rem; color:#555;">Tick items off as you shop. Quantities cover the full 7-day plan with small practical margins.</p>
+    <div class="shop-grid">
+
+      <div class="shop-category">
+        <div class="shop-category-header">Protein</div>
+        <div class="shop-item"><input type="checkbox" id="w1s1"><label for="w1s1">Eggs<span class="qty">12 large</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1s2"><label for="w1s2">Chicken breast<span class="qty">1.2 kg &mdash; Days 1, 2, 4, 5, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1s3"><label for="w1s3">Salmon fillets<span class="qty">360g &mdash; Days 5, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1s4"><label for="w1s4">Extra lean beef mince<span class="qty">400g &mdash; Days 2, 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1s5"><label for="w1s5">Sirloin steak<span class="qty">400g &mdash; Days 6, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1s6"><label for="w1s6">Hake fillets<span class="qty">400g &mdash; Days 3, 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1s7"><label for="w1s7">Tuna in water<span class="qty">1 can (160&ndash;170g) &mdash; Day 1</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1s8"><label for="w1s8">Biltong<span class="qty">30&ndash;50g &mdash; Day 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1s9"><label for="w1s9">Whey protein<span class="qty">30g &mdash; Day 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1s10"><label for="w1s10">USN Diet Fuel Ultralean<span class="qty">1 tub (min. 165g powder) &mdash; Days 2, 4, 6</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Dairy &amp; Fridge</div>
+        <div class="shop-item"><input type="checkbox" id="w1d1"><label for="w1d1">Low-fat cottage cheese<span class="qty">1 kg</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1d2"><label for="w1d2">Plain Greek yogurt<span class="qty">1 kg tub</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1d3"><label for="w1d3">Feta<span class="qty">100g &mdash; Day 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1d4"><label for="w1d4">Hummus<span class="qty">1 small tub (about 100g) &mdash; Day 5</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Fruit</div>
+        <div class="shop-item"><input type="checkbox" id="w1f1"><label for="w1f1">Bananas<span class="qty">2 medium &mdash; Days 2, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1f2"><label for="w1f2">Apples<span class="qty">2 medium &mdash; Days 3, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1f3"><label for="w1f3">Pear<span class="qty">1 medium &mdash; Day 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1f4"><label for="w1f4">Orange<span class="qty">1 medium &mdash; Day 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1f5"><label for="w1f5">Mixed berries<span class="qty">250g &mdash; snacks</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1f6"><label for="w1f6">Strawberries<span class="qty">125g punnet &mdash; Day 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1f7"><label for="w1f7">Avocados<span class="qty">2 medium</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1f8"><label for="w1f8">Lemon<span class="qty">1 &mdash; Day 1</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Vegetables</div>
+        <div class="shop-item"><input type="checkbox" id="w1v1"><label for="w1v1">Sweet potato<span class="qty">300g &mdash; Days 1, 2</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v2"><label for="w1v2">Baby potatoes<span class="qty">350g &mdash; Days 3, 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v3"><label for="w1v3">Potatoes<span class="qty">250g &mdash; Day 6 wedges</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v4"><label for="w1v4">Butternut<span class="qty">400g &mdash; Days 4, 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v5"><label for="w1v5">Courgettes<span class="qty">500g &mdash; Days 2, 3, 4, 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v6"><label for="w1v6">Broccoli<span class="qty">350g &mdash; Days 1, 2, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v7"><label for="w1v7">Carrots<span class="qty">500g &mdash; Days 1, 2, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v8"><label for="w1v8">Cauliflower<span class="qty">300g &mdash; Day 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v9"><label for="w1v9">Gem squash<span class="qty">2 medium &mdash; Days 6, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v10"><label for="w1v10">Spinach<span class="qty">400g &mdash; Days 1, 5, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v11"><label for="w1v11">Mushrooms<span class="qty">250g punnet &mdash; Day 1</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v12"><label for="w1v12">Mixed salad leaves<span class="qty">2 large bags or 600g</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v13"><label for="w1v13">Tomatoes<span class="qty">8 medium</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v14"><label for="w1v14">Cherry tomatoes<span class="qty">1 punnet (about 250g) &mdash; Day 2</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v15"><label for="w1v15">Cucumber<span class="qty">1 large</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v16"><label for="w1v16">Beetroot<span class="qty">250g cooked pack &mdash; Days 3, 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v17"><label for="w1v17">Onions<span class="qty">4 medium</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v18"><label for="w1v18">Bell peppers<span class="qty">4 medium</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v19"><label for="w1v19">Green beans<span class="qty">500g &mdash; Days 2, 3, 5, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v20"><label for="w1v20">Garlic<span class="qty">1 bulb</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1v21"><label for="w1v21">Fresh herbs / parsley<span class="qty">1 bunch (optional)</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Carbs &amp; Grains</div>
+        <div class="shop-item"><input type="checkbox" id="w1c1"><label for="w1c1">Wholewheat bread<span class="qty">1 small loaf &mdash; Day 1</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1c2"><label for="w1c2">Brown rice<span class="qty">250g dry &mdash; Days 1, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1c3"><label for="w1c3">Basmati rice<span class="qty">250g dry &mdash; Days 2, 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1c4"><label for="w1c4">Quinoa<span class="qty">250g dry &mdash; Days 4, 5, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1c5"><label for="w1c5">Rolled oats<span class="qty">500g &mdash; Days 3, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1c6"><label for="w1c6">High-protein granola<span class="qty">1 small bag (200&ndash;300g) &mdash; Day 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1c7"><label for="w1c7">Provitas<span class="qty">1 box &mdash; snacks Days 1, 3, 5, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1c8"><label for="w1c8">Rice cakes<span class="qty">1 pack &mdash; snacks Days 2, 3, 6, 7</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Pantry</div>
+        <div class="shop-item"><input type="checkbox" id="w1p1"><label for="w1p1">Chia seeds<span class="qty">1 small pack &mdash; Day 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1p2"><label for="w1p2">Pumpkin seeds<span class="qty">1 small pack &mdash; Day 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1p3"><label for="w1p3">Peanut butter<span class="qty">1 jar</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1p4"><label for="w1p4">Almonds<span class="qty">1 small pack (100g) &mdash; Day 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1p5"><label for="w1p5">Olive oil<span class="qty">1 bottle</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1p6"><label for="w1p6">Salt, black pepper, paprika<span class="qty">as needed</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w1p7"><label for="w1p7">Peri-peri spice, mixed herbs<span class="qty">as needed</span></label></div>
+      </div>
+
     </div>
+  </div><!-- /#shop-w1 -->
 
-    <!-- DAIRY & FRIDGE -->
-    <div class="shop-category">
-      <div class="shop-category-header">Dairy &amp; Fridge</div>
-      <div class="shop-item"><input type="checkbox" id="d1"><label for="d1">Low-fat cottage cheese<span class="qty">1 kg</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="d2"><label for="d2">Plain Greek yogurt<span class="qty">1 kg tub</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="d3"><label for="d3">Feta<span class="qty">100g &mdash; Day 5</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="d4"><label for="d4">Hummus<span class="qty">1 small tub (about 100g) &mdash; Day 5</span></label></div>
+  <!-- ── WEEK 2 ── -->
+  <div id="shop-w2" class="week-panel">
+    <p style="margin-bottom:1.2rem; font-size:0.88rem; color:#555;">Tick items off as you shop. Quantities cover the full 7-day plan. Check your pantry for staples that carry over from Week 1.</p>
+    <div class="shop-grid">
+
+      <div class="shop-category">
+        <div class="shop-category-header">Protein</div>
+        <div class="shop-item"><input type="checkbox" id="w2s1"><label for="w2s1">Eggs<span class="qty">10 large &mdash; Days 1, 2, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s2"><label for="w2s2">Chicken breast<span class="qty">360g &mdash; Days 6, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s3"><label for="w2s3">Lean pork fillet (tenderloin)<span class="qty">360g &mdash; Days 4, 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s4"><label for="w2s4">Fresh trout fillets<span class="qty">340g &mdash; Days 3, 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s5"><label for="w2s5">Lean pork mince<span class="qty">340g &mdash; Days 2, 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s6"><label for="w2s6">Sirloin or rump steak<span class="qty">340g &mdash; Days 5, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s7"><label for="w2s7">Hake fillets<span class="qty">360g &mdash; Days 1, 2</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s8"><label for="w2s8">Extra lean beef mince<span class="qty">170&ndash;340g &mdash; Day 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s9"><label for="w2s9">Tuna in water<span class="qty">1 can (160&ndash;170g) &mdash; Day 1</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s10"><label for="w2s10">Biltong<span class="qty">30&ndash;50g &mdash; Day 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s11"><label for="w2s11">Whey protein<span class="qty">30g &mdash; Day 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2s12"><label for="w2s12">USN Diet Fuel Ultralean<span class="qty">1 tub (min. 165g powder) &mdash; Days 2, 4, 7</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Dairy &amp; Fridge</div>
+        <div class="shop-item"><input type="checkbox" id="w2d1"><label for="w2d1">Low-fat cottage cheese<span class="qty">600g &mdash; multiple days</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2d2"><label for="w2d2">Plain Greek yogurt<span class="qty">1 kg tub</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2d3"><label for="w2d3">Hummus<span class="qty">1 small tub (about 100g) &mdash; Day 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2d4"><label for="w2d4">Avocados<span class="qty">2 medium &mdash; Days 5, 7</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Fruit</div>
+        <div class="shop-item"><input type="checkbox" id="w2f1"><label for="w2f1">Bananas<span class="qty">2 medium &mdash; Days 2, 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2f2"><label for="w2f2">Apples<span class="qty">2 medium &mdash; Days 3, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2f3"><label for="w2f3">Pears<span class="qty">2 medium &mdash; Days 4, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2f4"><label for="w2f4">Orange<span class="qty">1 medium &mdash; Day 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2f5"><label for="w2f5">Mixed berries<span class="qty">200&ndash;250g &mdash; Days 1, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2f6"><label for="w2f6">Strawberries<span class="qty">125g punnet &mdash; Day 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2f7"><label for="w2f7">Cherry tomatoes<span class="qty">2 small punnets &mdash; Days 1, 2, 6, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2f8"><label for="w2f8">Lemons<span class="qty">2 &mdash; Days 1, 3, 6</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Vegetables</div>
+        <div class="shop-item"><input type="checkbox" id="w2v1"><label for="w2v1">Baby potatoes<span class="qty">350g &mdash; Days 1, 2</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v2"><label for="w2v2">Sweet potato<span class="qty">300g &mdash; Days 3, 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v3"><label for="w2v3">Potatoes (for wedges)<span class="qty">300g &mdash; Days 5, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v4"><label for="w2v4">Butternut<span class="qty">400g &mdash; Days 4, 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v5"><label for="w2v5">Courgettes<span class="qty">700g &mdash; Days 2, 3, 4, 5, 6, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v6"><label for="w2v6">Broccoli<span class="qty">400g &mdash; Days 1, 2, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v7"><label for="w2v7">Carrots<span class="qty">300g &mdash; Days 2, 3</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v8"><label for="w2v8">Cauliflower<span class="qty">400g &mdash; Days 6, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v9"><label for="w2v9">Baby spinach<span class="qty">500g &mdash; Days 1, 3, 4, 5, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v10"><label for="w2v10">Mushrooms<span class="qty">100g &mdash; Day 1</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v11"><label for="w2v11">Mixed salad leaves<span class="qty">2 bags or 600g &mdash; Days 1, 5, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v12"><label for="w2v12">Tomatoes<span class="qty">5 medium &mdash; Days 1, 2, 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v13"><label for="w2v13">Cucumber<span class="qty">2 large</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v14"><label for="w2v14">Beetroot<span class="qty">250g cooked pack &mdash; Day 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v15"><label for="w2v15">Onions<span class="qty">3 medium</span></label></div>
+
+        <div class="shop-item"><input type="checkbox" id="w2v17"><label for="w2v17">Green beans<span class="qty">400g &mdash; Days 1, 2, 3, 4</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v18"><label for="w2v18">Garlic<span class="qty">1 bulb</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2v19"><label for="w2v19">Fresh herbs / parsley<span class="qty">1 bunch (optional)</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Carbs &amp; Grains</div>
+        <div class="shop-item"><input type="checkbox" id="w2c1"><label for="w2c1">Rye bread<span class="qty">1 small loaf &mdash; Day 1</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2c2"><label for="w2c2">Wholewheat bread<span class="qty">1 small loaf &mdash; Day 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2c3"><label for="w2c3">Basmati rice<span class="qty">250g dry &mdash; Days 2, 3, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2c4"><label for="w2c4">Brown rice<span class="qty">250g dry &mdash; Days 4, 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2c5"><label for="w2c5">Quinoa<span class="qty">250g dry &mdash; Days 6, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2c6"><label for="w2c6">Rolled oats<span class="qty">500g &mdash; Days 3, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2c7"><label for="w2c7">High-protein granola<span class="qty">1 small bag (200&ndash;300g) &mdash; Day 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2c8"><label for="w2c8">Provitas<span class="qty">1 box &mdash; snacks Days 1, 3, 5</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2c9"><label for="w2c9">Rice cakes<span class="qty">1 pack &mdash; snacks Days 2, 4, 6, 7</span></label></div>
+      </div>
+
+      <div class="shop-category">
+        <div class="shop-category-header">Pantry</div>
+        <div class="shop-item"><input type="checkbox" id="w2p1"><label for="w2p1">Chia seeds<span class="qty">1 small pack &mdash; Days 3, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2p2"><label for="w2p2">Pumpkin seeds<span class="qty">1 small pack &mdash; Days 4, 7</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2p3"><label for="w2p3">Peanut butter<span class="qty">1 jar (if not stocked)</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2p4"><label for="w2p4">Almonds<span class="qty">1 small pack (100g) &mdash; Days 4, 6</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2p5"><label for="w2p5">Olive oil<span class="qty">1 bottle (if not stocked)</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2p6"><label for="w2p6">Salt, black pepper, mixed herbs, garlic powder<span class="qty">as needed</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2p7"><label for="w2p7">Peri-peri spice, cumin, coriander, cinnamon<span class="qty">as needed</span></label></div>
+        <div class="shop-item"><input type="checkbox" id="w2p8"><label for="w2p8">Tomato-based sauce (low-sugar)<span class="qty">1 can or carton &mdash; Day 2 mince</span></label></div>
+      </div>
+
     </div>
+  </div><!-- /#shop-w2 -->
 
-    <!-- FRUIT -->
-    <div class="shop-category">
-      <div class="shop-category-header">Fruit</div>
-      <div class="shop-item"><input type="checkbox" id="f1"><label for="f1">Bananas<span class="qty">2 medium &mdash; Days 2, 7</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="f2"><label for="f2">Apples<span class="qty">2 medium &mdash; Days 3, 6</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="f3"><label for="f3">Pear<span class="qty">1 medium &mdash; Day 5</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="f4"><label for="f4">Orange<span class="qty">1 medium &mdash; Day 4</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="f5"><label for="f5">Mixed berries<span class="qty">250g &mdash; snacks</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="f6"><label for="f6">Strawberries<span class="qty">125g punnet &mdash; Day 4</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="f7"><label for="f7">Avocados<span class="qty">2 medium</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="f8"><label for="f8">Lemon<span class="qty">1 &mdash; Day 1</span></label></div>
-    </div>
-
-    <!-- VEGETABLES -->
-    <div class="shop-category">
-      <div class="shop-category-header">Vegetables</div>
-      <div class="shop-item"><input type="checkbox" id="v1"><label for="v1">Sweet potato<span class="qty">300g &mdash; Days 1, 2</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v2"><label for="v2">Baby potatoes<span class="qty">350g &mdash; Days 3, 4</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v3"><label for="v3">Potatoes<span class="qty">250g &mdash; Day 6 wedges</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v4"><label for="v4">Butternut<span class="qty">400g &mdash; Days 4, 5</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v5"><label for="v5">Courgettes<span class="qty">500g &mdash; Days 2, 3, 4, 5</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v6"><label for="v6">Broccoli<span class="qty">350g &mdash; Days 1, 2, 7</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v7"><label for="v7">Carrots<span class="qty">500g &mdash; Days 1, 2, 7</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v8"><label for="v8">Cauliflower<span class="qty">300g &mdash; Day 7</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v9"><label for="v9">Gem squash<span class="qty">2 medium &mdash; Days 6, 7</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v10"><label for="v10">Spinach<span class="qty">400g &mdash; Days 1, 5, 6</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v11"><label for="v11">Mushrooms<span class="qty">250g punnet &mdash; Day 1</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v12"><label for="v12">Mixed salad leaves<span class="qty">2 large bags or 600g</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v13"><label for="v13">Tomatoes<span class="qty">8 medium</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v14"><label for="v14">Cherry tomatoes<span class="qty">1 punnet (about 250g) &mdash; Day 2</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v15"><label for="v15">Cucumber<span class="qty">1 large</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v16"><label for="v16">Beetroot<span class="qty">250g cooked pack &mdash; Days 3, 4</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v17"><label for="v17">Onions<span class="qty">4 medium</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v18"><label for="v18">Bell peppers<span class="qty">4 medium</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v19"><label for="v19">Green beans<span class="qty">500g &mdash; Days 2, 3, 5, 6</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v20"><label for="v20">Garlic<span class="qty">1 bulb</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="v21"><label for="v21">Fresh herbs / parsley<span class="qty">1 bunch (optional)</span></label></div>
-    </div>
-
-    <!-- CARBS & GRAINS -->
-    <div class="shop-category">
-      <div class="shop-category-header">Carbs &amp; Grains</div>
-      <div class="shop-item"><input type="checkbox" id="c1"><label for="c1">Wholewheat bread<span class="qty">1 small loaf &mdash; Day 1</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="c2"><label for="c2">Brown rice<span class="qty">250g dry &mdash; Days 1, 7</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="c3"><label for="c3">Basmati rice<span class="qty">250g dry &mdash; Days 2, 3</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="c4"><label for="c4">Quinoa<span class="qty">250g dry &mdash; Days 4, 5, 6</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="c5"><label for="c5">Rolled oats<span class="qty">500g &mdash; Days 3, 6</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="c6"><label for="c6">High-protein granola<span class="qty">1 small bag (200&ndash;300g) &mdash; Day 4</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="c8"><label for="c8">Provitas<span class="qty">1 box &mdash; snacks Days 1, 3, 5, 7</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="c9"><label for="c9">Rice cakes<span class="qty">1 pack &mdash; snacks Days 2, 3, 6, 7</span></label></div>
-    </div>
-
-    <!-- PANTRY -->
-    <div class="shop-category">
-      <div class="shop-category-header">Pantry</div>
-      <div class="shop-item"><input type="checkbox" id="p1"><label for="p1">Chia seeds<span class="qty">1 small pack &mdash; Day 3</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="p2"><label for="p2">Pumpkin seeds<span class="qty">1 small pack &mdash; Day 4</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="p3"><label for="p3">Peanut butter<span class="qty">1 jar</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="p4"><label for="p4">Almonds<span class="qty">1 small pack (100g) &mdash; Day 6</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="p5"><label for="p5">Olive oil<span class="qty">1 bottle</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="p6"><label for="p6">Salt, black pepper, paprika<span class="qty">as needed</span></label></div>
-      <div class="shop-item"><input type="checkbox" id="p7"><label for="p7">Peri-peri spice, mixed herbs<span class="qty">as needed</span></label></div>
-    </div>
-
-  </div><!-- /.shop-grid -->
 </section>
 
-<!-- ═══════════════ PREP GUIDE ═══════════════ -->
+<!-- ═══════════════════════════════════════════
+     PREP GUIDE
+════════════════════════════════════════════ -->
 <section id="prep">
   <h2>Prep Guide</h2>
 
-  <div class="prep-section">
-    <h3>How to Use This Guide</h3>
-    <ul>
-      <li>Buy proteins first and portion them before refrigerating or freezing.</li>
-      <li>Quantities on the shopping list are rounded to practical store sizes.</li>
-      <li>The dinner-to-next-lunch system means you only cook one extra portion each evening &mdash; no separate lunch cooking needed.</li>
-    </ul>
+  <div class="week-nav">
+    <button class="active" onclick="showWeek('prep', 'prep-w1', this)">Week 1</button>
+    <button onclick="showWeek('prep', 'prep-w2', this)">Week 2</button>
   </div>
 
-  <div class="prep-section">
-    <h3>Sunday Prep Session &mdash; approx. 90 minutes</h3>
-    <h3 style="color:#2d6a4f; margin-top:0.8rem;">1. Portion proteins</h3>
-    <p style="font-size:0.88rem; color:#555; margin-bottom:0.5rem;">Meat, fish, and mince portions are listed as raw weight before cooking. Tuna is listed as drained weight, and dairy items are listed as served weight.</p>
-    <ul>
-      <li>Chicken breast &rarr; 2 &times; 170g raw portions (Day 1 dinner &amp; Day 2 lunch) + 2 &times; 180g raw portions (Day 4 dinner &amp; Day 5 lunch)</li>
-      <li>Beef mince &rarr; 2 &times; 170g raw portions (Day 2 dinner &amp; Day 3 lunch)</li>
-      <li>Hake &rarr; 2 &times; 180g raw portions (Day 3 dinner &amp; Day 4 lunch)</li>
-      <li>Salmon fillets &rarr; 2 &times; 160g raw portions (Day 5 dinner &amp; Day 6 lunch)</li>
-      <li>Sirloin steak &rarr; 2 &times; 170g raw portions (Day 6 dinner &amp; Day 7 lunch)</li>
-      <li>Chicken breast &rarr; extra 180g raw strips for Day 7 dinner</li>
-    </ul>
-    <h3 style="color:#2d6a4f; margin-top:0.8rem;">2. Wash and chop vegetables</h3>
-    <ul>
-      <li>Chop broccoli, carrots, butternut, courgettes, peppers, onions, and green beans</li>
-      <li>Wash salad leaves; store with paper towel in a sealed container</li>
-      <li>Slice cucumber; prep beetroot if not using a pre-cooked pack</li>
-      <li>Keep mushrooms and tomatoes separate for quick breakfasts</li>
-    </ul>
-    <h3 style="color:#2d6a4f; margin-top:0.8rem;">3. Cook base carbs</h3>
-    <ul>
-      <li>Brown rice &rarr; 2 &times; 100g cooked portions</li>
-      <li>Basmati rice &rarr; 2 &times; 100g cooked portions</li>
-      <li>Quinoa &rarr; 2 &times; 100g cooked portions for Days 4 &amp; 5 lunch; cook 2 more on Day 5 evening for dinner &amp; Day 6 lunch</li>
-      <li>Pre-boil or roast sweet potatoes and baby potatoes for the first half of the week</li>
-      <li>Measure dry oats into containers for overnight oats (Day 3) and shake add-in (Day 6)</li>
-    </ul>
-    <h3 style="color:#2d6a4f; margin-top:0.8rem;">4. Breakfast and snack pre-packing</h3>
-    <ul>
-      <li>Boil 2 eggs for Day 2 snack</li>
-      <li>Build overnight oats for Day 3 breakfast &mdash; assemble in a jar the night before</li>
-      <li>Portion Greek yogurt, cottage cheese, almonds, Provitas, and rice cakes into grab-and-go servings</li>
-      <li>Keep fruit washed and visible for easier adherence</li>
-    </ul>
-  </div>
+  <!-- ── WEEK 1 ── -->
+  <div id="prep-w1" class="week-panel active">
 
-  <div class="prep-section">
-    <h3>Midweek Top-Up &mdash; approx. 45&ndash;60 minutes (Day 4 or evening before)</h3>
-    <ul>
-      <li>Roast potato wedges for Day 6 if not done earlier</li>
-      <li>Prep gem squash and extra salad vegetables</li>
-      <li>Marinate sirloin steak and chicken breast strips for Day 7</li>
-      <li>Refill snack portions for the second half of the week</li>
-    </ul>
-  </div>
+    <div class="prep-section">
+      <h3>How to Use This Guide</h3>
+      <ul>
+        <li>Buy proteins first and portion them before refrigerating or freezing.</li>
+        <li>Quantities on the shopping list are rounded to practical store sizes.</li>
+        <li>The dinner-to-next-lunch system means you only cook one extra portion each evening &mdash; no separate lunch cooking needed.</li>
+      </ul>
+    </div>
 
-  <div class="prep-section">
-    <h3>Dinner-to-Lunch Flow</h3>
-    <table class="flow-table">
-      <thead>
-        <tr><th>Day cooked</th><th>Dinner</th><th>Becomes lunch on</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Day 1</td><td>Airfryer lemon herb chicken, sweet potato, broccoli &amp; carrots</td><td>Day 2</td></tr>
-        <tr><td>Day 2</td><td>Lean beef mince breyani bowl, basmati rice, green beans &amp; peppers</td><td>Day 3</td></tr>
-        <tr><td>Day 3</td><td>Oven-baked hake, baby potatoes, salad</td><td>Day 4</td></tr>
-        <tr><td>Day 4</td><td>Peri-peri chicken breast strips, quinoa, butternut &amp; courgettes</td><td>Day 5</td></tr>
-        <tr><td>Day 5</td><td>Pan-seared salmon, quinoa, spinach &amp; green beans</td><td>Day 6</td></tr>
-        <tr><td>Day 6</td><td>Braai-style sirloin steak, potato wedges, gem squash &amp; salad</td><td>Day 7</td></tr>
-        <tr><td>Day 7</td><td>Oven-baked chicken breast strips, brown rice, cauliflower, carrots &amp; broccoli</td><td>Monday (optional)</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="prep-section">
+      <h3>Sunday Prep Session &mdash; approx. 90 minutes</h3>
+      <h3 style="color:#2d6a4f; margin-top:0.8rem;">1. Portion proteins</h3>
+      <p style="font-size:0.88rem; color:#555; margin-bottom:0.5rem;">Meat, fish, and mince portions are listed as raw weight before cooking. Tuna is listed as drained weight, and dairy items are listed as served weight.</p>
+      <ul>
+        <li>Chicken breast &rarr; 2 &times; 170g raw portions (Day 1 dinner &amp; Day 2 lunch) + 2 &times; 180g raw portions (Day 4 dinner &amp; Day 5 lunch)</li>
+        <li>Beef mince &rarr; 2 &times; 170g raw portions (Day 2 dinner &amp; Day 3 lunch)</li>
+        <li>Hake &rarr; 2 &times; 180g raw portions (Day 3 dinner &amp; Day 4 lunch)</li>
+        <li>Salmon fillets &rarr; 2 &times; 160g raw portions (Day 5 dinner &amp; Day 6 lunch)</li>
+        <li>Sirloin steak &rarr; 2 &times; 170g raw portions (Day 6 dinner &amp; Day 7 lunch)</li>
+        <li>Chicken breast &rarr; extra 180g raw strips for Day 7 dinner</li>
+      </ul>
+      <h3 style="color:#2d6a4f; margin-top:0.8rem;">2. Wash and chop vegetables</h3>
+      <ul>
+        <li>Chop broccoli, carrots, butternut, courgettes, peppers, onions, and green beans</li>
+        <li>Wash salad leaves; store with paper towel in a sealed container</li>
+        <li>Slice cucumber; prep beetroot if not using a pre-cooked pack</li>
+        <li>Keep mushrooms and tomatoes separate for quick breakfasts</li>
+      </ul>
+      <h3 style="color:#2d6a4f; margin-top:0.8rem;">3. Cook base carbs</h3>
+      <ul>
+        <li>Brown rice &rarr; 2 &times; 100g cooked portions</li>
+        <li>Basmati rice &rarr; 2 &times; 100g cooked portions</li>
+        <li>Quinoa &rarr; 2 &times; 100g cooked portions for Days 4 &amp; 5 lunch; cook 2 more on Day 5 evening for dinner &amp; Day 6 lunch</li>
+        <li>Pre-boil or roast sweet potatoes and baby potatoes for the first half of the week</li>
+        <li>Measure dry oats into containers for overnight oats (Day 3) and shake add-in (Day 6)</li>
+      </ul>
+      <h3 style="color:#2d6a4f; margin-top:0.8rem;">4. Breakfast and snack pre-packing</h3>
+      <ul>
+        <li>Boil 2 eggs for Day 2 snack</li>
+        <li>Build overnight oats for Day 3 breakfast &mdash; assemble in a jar the night before</li>
+        <li>Portion Greek yogurt, cottage cheese, almonds, Provitas, and rice cakes into grab-and-go servings</li>
+        <li>Keep fruit washed and visible for easier adherence</li>
+      </ul>
+    </div>
 
-  <div class="prep-section">
-    <h3>Storage Notes</h3>
-    <ul>
-      <li>Store cooked proteins and starches in sealed containers and use within 2&ndash;3 days</li>
-      <li>Freeze raw proteins you will only use later in the week; thaw in the fridge the day before</li>
-      <li>Keep salads and roast vegetables separate from dressings until serving</li>
-      <li>Label leftover containers by day to reduce decision fatigue</li>
-    </ul>
-  </div>
+    <div class="prep-section">
+      <h3>Midweek Top-Up &mdash; approx. 45&ndash;60 minutes (Day 4 or evening before)</h3>
+      <ul>
+        <li>Roast potato wedges for Day 6 if not done earlier</li>
+        <li>Prep gem squash and extra salad vegetables</li>
+        <li>Marinate sirloin steak and chicken breast strips for Day 7</li>
+        <li>Refill snack portions for the second half of the week</li>
+      </ul>
+    </div>
 
-  <div class="prep-section">
-    <h3>Adherence Tips</h3>
-    <ul>
-      <li>If hunger is high, increase non-starchy vegetables first</li>
-      <li>If training volume is higher on a specific day, move a fruit serving to pre- or post-workout</li>
-      <li>If a USN shake day is not practical, swap with a Greek yogurt-based meal from another day and keep the rest of the structure the same</li>
-      <li>Meat, fish, and mince portions are 150&ndash;180g raw weight before cooking; vegetable portions are generally 250&ndash;300g</li>
-    </ul>
-  </div>
+    <div class="prep-section">
+      <h3>Dinner-to-Lunch Flow &ndash; Week 1</h3>
+      <table class="flow-table">
+        <thead>
+          <tr><th>Day cooked</th><th>Dinner</th><th>Becomes lunch on</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Day 1</td><td>Airfryer lemon herb chicken, sweet potato, broccoli &amp; carrots</td><td>Day 2</td></tr>
+          <tr><td>Day 2</td><td>Lean beef mince breyani bowl, basmati rice, green beans &amp; peppers</td><td>Day 3</td></tr>
+          <tr><td>Day 3</td><td>Oven-baked hake, baby potatoes, salad</td><td>Day 4</td></tr>
+          <tr><td>Day 4</td><td>Peri-peri chicken breast strips, quinoa, butternut &amp; courgettes</td><td>Day 5</td></tr>
+          <tr><td>Day 5</td><td>Pan-seared salmon, quinoa, spinach &amp; green beans</td><td>Day 6</td></tr>
+          <tr><td>Day 6</td><td>Braai-style sirloin steak, potato wedges, gem squash &amp; salad</td><td>Day 7</td></tr>
+          <tr><td>Day 7</td><td>Oven-baked chicken breast strips, brown rice, cauliflower, carrots &amp; broccoli</td><td>Monday (optional)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prep-section">
+      <h3>Storage Notes</h3>
+      <ul>
+        <li>Store cooked proteins and starches in sealed containers and use within 2&ndash;3 days</li>
+        <li>Freeze raw proteins you will only use later in the week; thaw in the fridge the day before</li>
+        <li>Keep salads and roast vegetables separate from dressings until serving</li>
+        <li>Label leftover containers by day to reduce decision fatigue</li>
+      </ul>
+    </div>
+
+    <div class="prep-section">
+      <h3>Adherence Tips</h3>
+      <ul>
+        <li>If hunger is high, increase non-starchy vegetables first</li>
+        <li>If training volume is higher on a specific day, move a fruit serving to pre- or post-workout</li>
+        <li>If a USN shake day is not practical, swap with a Greek yogurt-based meal from another day and keep the rest of the structure the same</li>
+        <li>Meat, fish, and mince portions are 150&ndash;180g raw weight before cooking; vegetable portions are generally 250&ndash;300g</li>
+      </ul>
+    </div>
+
+  </div><!-- /#prep-w1 -->
+
+  <!-- ── WEEK 2 ── -->
+  <div id="prep-w2" class="week-panel">
+
+    <div class="prep-section">
+      <h3>How to Use This Guide</h3>
+      <ul>
+        <li>The same dinner-to-next-lunch system applies &mdash; cook one extra portion each evening to eliminate separate lunch cooking.</li>
+        <li>Proteins are listed as raw weight before cooking, except tuna (drained weight) and dairy (served weight).</li>
+        <li>Trout and lean pork (mince and fillet) are the new proteins this week &mdash; both are available at most SA supermarkets.</li>
+      </ul>
+    </div>
+
+    <div class="prep-section">
+      <h3>Sunday Prep Session &mdash; approx. 90 minutes</h3>
+      <h3 style="color:#2d6a4f; margin-top:0.8rem;">1. Portion proteins</h3>
+      <p style="font-size:0.88rem; color:#555; margin-bottom:0.5rem;">Portion raw proteins before refrigerating. Freeze what you will not use in the first 2&ndash;3 days and thaw in the fridge overnight.</p>
+      <ul>
+        <li>Hake fillets &rarr; 2 &times; 180g raw portions (Day 1 dinner &amp; Day 2 lunch)</li>
+        <li>Lean pork mince &rarr; 2 &times; 170g raw portions (Day 2 dinner &amp; Day 3 lunch)</li>
+        <li>Trout fillets &rarr; 2 &times; 170g raw portions (Day 3 dinner &amp; Day 4 lunch)</li>
+        <li>Lean pork fillet strips &rarr; 2 &times; 180g raw portions (Day 4 dinner &amp; Day 5 lunch)</li>
+        <li>Sirloin or rump steak &rarr; 2 &times; 170g raw portions (Day 5 dinner &amp; Day 6 lunch)</li>
+        <li>Chicken breast &rarr; 2 &times; 180g raw portions (Day 6 dinner &amp; Day 7 lunch)</li>
+        <li>Extra lean beef mince &rarr; 170g for Day 7 dinner (or 340g if doubling for Monday)</li>
+      </ul>
+      <h3 style="color:#2d6a4f; margin-top:0.8rem;">2. Wash and chop vegetables</h3>
+      <ul>
+        <li>Chop broccoli, carrots, courgettes, butternut, and green beans</li>
+        <li>Wash and bag salad leaves; store with a sheet of paper towel in a sealed container</li>
+        <li>Cube sweet potato and baby potatoes for roasting; slice cucumber</li>
+        <li>Keep mushrooms, cherry tomatoes, and baby spinach separate for quick use</li>
+      </ul>
+      <h3 style="color:#2d6a4f; margin-top:0.8rem;">3. Cook base carbs</h3>
+      <ul>
+        <li>Quinoa &rarr; 2 &times; 100g cooked portions for Day 1 lunch; cook 2 more on Day 6 evening for dinner &amp; Day 7 lunch</li>
+        <li>Basmati rice &rarr; 2 &times; 100g cooked portions for Days 2 &amp; 3</li>
+        <li>Brown rice &rarr; 2 &times; 100g cooked portions for Days 4 &amp; 5</li>
+        <li>Roast baby potatoes and sweet potato for the first half of the week</li>
+        <li>Measure oats into a jar for overnight oats (Day 3 &mdash; build the evening before)</li>
+      </ul>
+      <h3 style="color:#2d6a4f; margin-top:0.8rem;">4. Breakfast and snack pre-packing</h3>
+      <ul>
+        <li>Boil 2 eggs for Day 2 snack and 2 more for Day 7 snack</li>
+        <li>Build overnight oats for Day 3 the evening before (Day 2 night)</li>
+        <li>Portion Greek yogurt, cottage cheese, almonds, Provitas, and rice cakes into grab-and-go servings</li>
+        <li>Wash all fruit and keep it visible at the front of the fridge</li>
+      </ul>
+    </div>
+
+    <div class="prep-section">
+      <h3>Midweek Top-Up &mdash; approx. 45&ndash;60 minutes (Day 4 or evening before)</h3>
+      <ul>
+        <li>Prep potato wedges for Days 5 &amp; 6 (par-boil and season ready to roast)</li>
+        <li>Marinate steak and pork fillet strips if preferred</li>
+        <li>Refill snack containers for the second half of the week</li>
+        <li>Prep cauliflower and courgettes for Day 6 dinner roast</li>
+      </ul>
+    </div>
+
+    <div class="prep-section">
+      <h3>Dinner-to-Lunch Flow &ndash; Week 2</h3>
+      <table class="flow-table">
+        <thead>
+          <tr><th>Day cooked</th><th>Dinner</th><th>Becomes lunch on</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Day 1</td><td>Airfryer herb-crusted hake, baby potatoes, broccoli &amp; green beans</td><td>Day 2</td></tr>
+          <tr><td>Day 2</td><td>Lean pork mince tomato herb bowl, basmati rice, courgettes &amp; carrots</td><td>Day 3</td></tr>
+          <tr><td>Day 3</td><td>Pan-seared trout, roasted sweet potato, baby spinach &amp; green beans</td><td>Day 4</td></tr>
+          <tr><td>Day 4</td><td>Peri-peri lean pork fillet strips, brown rice, butternut &amp; courgettes</td><td>Day 5</td></tr>
+          <tr><td>Day 5</td><td>Braai-style sirloin/rump steak, potato wedges, mixed salad</td><td>Day 6</td></tr>
+          <tr><td>Day 6</td><td>Oven-baked lemon garlic chicken breast, quinoa, cauliflower, tomatoes &amp; courgettes</td><td>Day 7</td></tr>
+          <tr><td>Day 7</td><td>Extra lean beef mince and veggie bowl, basmati rice, baby spinach &amp; broccoli</td><td>Monday (optional)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prep-section">
+      <h3>Storage Notes</h3>
+      <ul>
+        <li>Store cooked proteins and starches in sealed containers and use within 2&ndash;3 days</li>
+        <li>Trout and hake are more delicate than chicken &mdash; eat their leftovers within 24 hours</li>
+        <li>Freeze raw pork mince and pork fillet strips if you want to buy them fresh mid-week instead</li>
+        <li>Label all leftover containers by day number to reduce decision fatigue</li>
+      </ul>
+    </div>
+
+    <div class="prep-section">
+      <h3>Adherence Tips</h3>
+      <ul>
+        <li>If lean pork mince is unavailable, replace with extra lean beef mince or chicken mince at the same weight</li>
+        <li>If trout is expensive, use hake again &mdash; the flavour profile is different enough to keep variety</li>
+        <li>If hunger is high, add 50&ndash;100g extra non-starchy vegetables before adjusting anything else</li>
+        <li>If a USN shake day is not practical, swap with a Greek yogurt or cottage cheese-based meal</li>
+      </ul>
+    </div>
+
+  </div><!-- /#prep-w2 -->
 
 </section>
 
-<!-- ═══════════════ ALTERNATIVES ═══════════════ -->
+<!-- ═══════════════════════════════════════════
+     ALTERNATIVES (shared)
+════════════════════════════════════════════ -->
 <section id="alternatives">
   <h2>Ingredient Alternatives</h2>
-  <p style="margin-bottom:1.2rem; font-size:0.88rem; color:#555;">Swap any ingredient below if it is unavailable, too expensive, or not preferred. All alternatives are SA-friendly and keep the plan&rsquo;s nutritional balance intact.</p>
+  <p style="margin-bottom:1.2rem; font-size:0.88rem; color:#555;">Applies to both weeks. Swap any ingredient if it is unavailable, too expensive, or not preferred. All alternatives are SA-friendly and keep the plan&rsquo;s nutritional balance intact.</p>
   <div class="alt-grid">
 
-    <!-- PROTEIN -->
     <div class="alt-category">
       <div class="alt-category-header">Protein</div>
       <div class="alt-row"><div class="alt-original">Chicken breast</div><span class="alt-item">Turkey breast fillet <span class="alt-note">&mdash; same macros, cook identically</span></span><span class="alt-item">Lean pork fillet <span class="alt-note">&mdash; slightly more fat, still lean</span></span></div>
       <div class="alt-row"><div class="alt-original">Salmon fillet</div><span class="alt-item">Fresh trout fillet <span class="alt-note">&mdash; similar omega-3, often cheaper in SA</span></span><span class="alt-item">Tinned salmon in water <span class="alt-note">&mdash; budget option, use drained</span></span></div>
+      <div class="alt-row"><div class="alt-original">Fresh trout fillet</div><span class="alt-item">Salmon fillet <span class="alt-note">&mdash; same omega-3 profile, slightly richer</span></span><span class="alt-item">Hake fillet <span class="alt-note">&mdash; leaner, milder, bake or airfry identically</span></span></div>
       <div class="alt-row"><div class="alt-original">Hake fillet</div><span class="alt-item">Tilapia <span class="alt-note">&mdash; milder flavour, same protein</span></span><span class="alt-item">Kingklip <span class="alt-note">&mdash; premium SA option, rich flavour</span></span></div>
-      <div class="alt-row"><div class="alt-original">Sirloin steak</div><span class="alt-item">Rump steak <span class="alt-note">&mdash; leaner cut, slightly more chew</span></span><span class="alt-item">Beef fillet <span class="alt-note">&mdash; very lean, higher cost</span></span></div>
+      <div class="alt-row"><div class="alt-original">Sirloin / rump steak</div><span class="alt-item">Beef fillet <span class="alt-note">&mdash; very lean, higher cost</span></span><span class="alt-item">Chicken breast (braai-style) <span class="alt-note">&mdash; if red meat is not preferred</span></span></div>
       <div class="alt-row"><div class="alt-original">Extra lean beef mince</div><span class="alt-item">Ostrich mince <span class="alt-note">&mdash; very lean, SA specialty</span></span><span class="alt-item">Turkey mince <span class="alt-note">&mdash; similar leanness, milder</span></span></div>
+      <div class="alt-row"><div class="alt-original">Ostrich mince</div><span class="alt-item">Extra lean beef mince <span class="alt-note">&mdash; most direct swap, same cooking method</span></span><span class="alt-item">Turkey mince <span class="alt-note">&mdash; similar leanness, milder flavour</span></span></div>
+      <div class="alt-row"><div class="alt-original">Turkey breast strips</div><span class="alt-item">Chicken breast strips <span class="alt-note">&mdash; identical macros and cooking time</span></span><span class="alt-item">Lean pork fillet sliced <span class="alt-note">&mdash; slightly more fat, still lean</span></span></div>
       <div class="alt-row"><div class="alt-original">Tuna in water</div><span class="alt-item">Pilchards (drained &amp; rinsed) <span class="alt-note">&mdash; SA staple, stronger flavour</span></span><span class="alt-item">Canned salmon in water <span class="alt-note">&mdash; higher omega-3</span></span></div>
-      <div class="alt-row"><div class="alt-original">Biltong</div><span class="alt-item">Dro&euml;wors <span class="alt-note">&mdash; slightly higher fat, great SA flavour</span></span><span class="alt-item">Lean beef jerky <span class="alt-note">&mdash; watch sodium content</span></span></div>
+      <div class="alt-row"><div class="alt-original">Biltong</div><span class="alt-item">Dro&euml;wors <span class="alt-note">&mdash; slightly higher fat, great SA flavour</span></span><span class="alt-item">Hard-boiled eggs (2) <span class="alt-note">&mdash; if biltong is not available</span></span></div>
       <div class="alt-row"><div class="alt-original">USN Diet Fuel Ultralean</div><span class="alt-item">Evox Meal Replacement or Biogen Complete Meal <span class="alt-note">&mdash; any high-protein, low-sugar shake works</span></span></div>
       <div class="alt-row"><div class="alt-original">Whey protein (oats add-in)</div><span class="alt-item">Casein protein <span class="alt-note">&mdash; slower-digesting, same 30g quantity</span></span><span class="alt-item">Pea protein powder <span class="alt-note">&mdash; plant-based option</span></span></div>
     </div>
 
-    <!-- DAIRY -->
     <div class="alt-category">
       <div class="alt-category-header">Dairy &amp; Fridge</div>
-      <div class="alt-row"><div class="alt-original">Low-fat cottage cheese</div><span class="alt-item">Smooth ricotta <span class="alt-note">&mdash; slightly higher fat, reduce to 120g</span></span><span class="alt-item">Plain Skyr <span class="alt-note">&mdash; very similar macros</span></span></div>
-      <div class="alt-row"><div class="alt-original">Plain Greek yogurt</div><span class="alt-item">Plain Skyr <span class="alt-note">&mdash; near-identical protein content</span></span><span class="alt-item">Plain double-cream yogurt (100g) <span class="alt-note">&mdash; higher fat, reduce portion</span></span></div>
+      <div class="alt-row"><div class="alt-original">Low-fat cottage cheese</div><span class="alt-item">Plain Skyr <span class="alt-note">&mdash; near-identical protein content</span></span><span class="alt-item">Smooth ricotta <span class="alt-note">&mdash; slightly higher fat, reduce to 120g</span></span></div>
+      <div class="alt-row"><div class="alt-original">Plain Greek yogurt</div><span class="alt-item">Plain Skyr <span class="alt-note">&mdash; very high protein, great texture</span></span><span class="alt-item">Amasi (maas) <span class="alt-note">&mdash; SA fermented milk, lower protein, lighter</span></span></div>
       <div class="alt-row"><div class="alt-original">Feta</div><span class="alt-item">Ricotta salata <span class="alt-note">&mdash; milder, crumbles similarly</span></span><span class="alt-item">Low-fat halloumi (grilled) <span class="alt-note">&mdash; higher protein, good texture</span></span></div>
       <div class="alt-row"><div class="alt-original">Hummus</div><span class="alt-item">Cottage cheese blended with garlic &amp; herbs <span class="alt-note">&mdash; higher protein, cheaper</span></span><span class="alt-item">Tzatziki (yogurt, cucumber, garlic) <span class="alt-note">&mdash; lighter option</span></span></div>
+      <div class="alt-row"><div class="alt-original">Avocado</div><span class="alt-item">Hummus (60g) <span class="alt-note">&mdash; similar healthy fats, different texture</span></span><span class="alt-item">Olive tapenade (20g) <span class="alt-note">&mdash; small portion, intense flavour</span></span></div>
     </div>
 
-    <!-- CARBS -->
     <div class="alt-category">
       <div class="alt-category-header">Carbs &amp; Grains</div>
       <div class="alt-row"><div class="alt-original">Brown rice</div><span class="alt-item">Pearl or pot barley <span class="alt-note">&mdash; lower GI, more fibre</span></span><span class="alt-item">Wild rice blend <span class="alt-note">&mdash; similar macros</span></span></div>
+      <div class="alt-row"><div class="alt-original">Basmati rice</div><span class="alt-item">Brown rice <span class="alt-note">&mdash; lower GI, more fibre</span></span><span class="alt-item">Cauliflower rice <span class="alt-note">&mdash; very low carb, great with mince dishes</span></span></div>
       <div class="alt-row"><div class="alt-original">Quinoa</div><span class="alt-item">Bulgur wheat <span class="alt-note">&mdash; cheaper, slightly lower protein</span></span><span class="alt-item">Couscous <span class="alt-note">&mdash; faster to prep, slightly higher GI</span></span></div>
       <div class="alt-row"><div class="alt-original">Rolled oats</div><span class="alt-item">Steel-cut oats <span class="alt-note">&mdash; lower GI, longer cook time</span></span><span class="alt-item">Oat bran <span class="alt-note">&mdash; higher fibre, use 30g</span></span></div>
-      <div class="alt-row"><div class="alt-original">Wholewheat toast</div><span class="alt-item">Low-GI seed loaf <span class="alt-note">&mdash; same portion by weight</span></span><span class="alt-item">Rye bread <span class="alt-note">&mdash; denser, lower GI</span></span></div>
+      <div class="alt-row"><div class="alt-original">Wholewheat / rye bread</div><span class="alt-item">Low-GI seed loaf <span class="alt-note">&mdash; same portion by weight</span></span><span class="alt-item">Any dense, low-sugar sliced bread <span class="alt-note">&mdash; keep to 1 slice</span></span></div>
       <div class="alt-row"><div class="alt-original">Provitas</div><span class="alt-item">Ryvita original crispbreads <span class="alt-note">&mdash; similar fibre and calories</span></span><span class="alt-item">Any high-fibre cracker <span class="alt-note">&mdash; check sugar content</span></span></div>
       <div class="alt-row"><div class="alt-original">Rice cakes</div><span class="alt-item">Corn thins <span class="alt-note">&mdash; slightly lower carb</span></span><span class="alt-item">Oat cakes <span class="alt-note">&mdash; more fibre and satiety</span></span></div>
       <div class="alt-row"><div class="alt-original">High-protein granola</div><span class="alt-item">Rolled oats + seeds + cinnamon (DIY) <span class="alt-note">&mdash; more protein control</span></span><span class="alt-item">All-Bran Flakes <span class="alt-note">&mdash; higher fibre, lower calorie</span></span></div>
@@ -612,15 +1032,14 @@
       <div class="alt-row"><div class="alt-original">Baby potatoes</div><span class="alt-item">Sweet potato chunks <span class="alt-note">&mdash; lower GI alternative</span></span><span class="alt-item">Gem squash or butternut <span class="alt-note">&mdash; lower carb, roasts well</span></span></div>
     </div>
 
-    <!-- VEGETABLES -->
     <div class="alt-category">
       <div class="alt-category-header">Vegetables</div>
       <div class="alt-row"><div class="alt-original">Butternut</div><span class="alt-item">Pumpkin <span class="alt-note">&mdash; identical prep and macros</span></span><span class="alt-item">Gem squash <span class="alt-note">&mdash; SA staple, roasts or steams well</span></span></div>
       <div class="alt-row"><div class="alt-original">Courgettes / baby marrow</div><span class="alt-item">Asparagus <span class="alt-note">&mdash; similar texture when roasted</span></span><span class="alt-item">Green beans <span class="alt-note">&mdash; already in the plan, easy swap</span></span></div>
       <div class="alt-row"><div class="alt-original">Broccoli</div><span class="alt-item">Cauliflower <span class="alt-note">&mdash; interchangeable in most recipes</span></span><span class="alt-item">Broccolini / tenderstem <span class="alt-note">&mdash; milder, faster to cook</span></span></div>
-      <div class="alt-row"><div class="alt-original">Spinach</div><span class="alt-item">Swiss chard (silverbeet) <span class="alt-note">&mdash; stronger flavour, same nutrition</span></span><span class="alt-item">Kale <span class="alt-note">&mdash; higher fibre, saut&eacute; first</span></span></div>
+      <div class="alt-row"><div class="alt-original">Spinach / baby spinach</div><span class="alt-item">Swiss chard (silverbeet) <span class="alt-note">&mdash; stronger flavour, same nutrition</span></span><span class="alt-item">Kale <span class="alt-note">&mdash; higher fibre, saut&eacute; first</span></span></div>
       <div class="alt-row"><div class="alt-original">Cauliflower</div><span class="alt-item">Broccoli <span class="alt-note">&mdash; fully interchangeable</span></span><span class="alt-item">Turnip <span class="alt-note">&mdash; roasts similarly, different flavour</span></span></div>
-      <div class="alt-row"><div class="alt-original">Avocado</div><span class="alt-item">Hummus (60g) <span class="alt-note">&mdash; similar healthy fats</span></span><span class="alt-item">Olive tapenade (20g) <span class="alt-note">&mdash; smaller portion, intense flavour</span></span></div>
+      <div class="alt-row"><div class="alt-original">Bell pepper</div><span class="alt-item">Yellow or green pepper <span class="alt-note">&mdash; same nutrition, different sweetness</span></span><span class="alt-item">Sundried tomatoes (30g) <span class="alt-note">&mdash; intense flavour, use sparingly</span></span></div>
       <div class="alt-row"><div class="alt-original">Mixed salad leaves</div><span class="alt-item">Shredded cabbage + grated carrot <span class="alt-note">&mdash; budget-friendly, still nutritious</span></span><span class="alt-item">Shredded lettuce + cucumber + tomato <span class="alt-note">&mdash; always available</span></span></div>
     </div>
 
@@ -628,13 +1047,169 @@
   <p style="margin-top:1.4rem; font-size:0.82rem; color:#777;">When swapping to a higher-fat alternative, reduce the portion by 10&ndash;20g. All carb alternatives should be prepared at the same cooked weight as listed in the plan. Vegetable swaps are freely interchangeable as long as total portion stays in the 250&ndash;300g range.</p>
 </section>
 
-<!-- ═══════════════ OVERVIEW ═══════════════ -->
+<!-- ═══════════════════════════════════════════
+     EXERCISE (shared)
+════════════════════════════════════════════ -->
+<section id="exercise">
+  <h2>Light Exercise Guide</h2>
+  <p style="margin-bottom:1.2rem; font-size:0.88rem; color:#555;">You do not need to train hard to lose fat. Consistent light-to-moderate movement combined with this meal plan is a highly effective and sustainable combination. The exercises below are low-impact, easy to start, and scale as your fitness improves.</p>
+
+  <div class="prep-section">
+    <h3>Why Light Exercise Works for Fat Loss</h3>
+    <ul>
+      <li>Low-intensity exercise burns fat directly as its primary fuel source &mdash; your body preferentially uses stored fat at moderate effort levels.</li>
+      <li>It preserves muscle better than aggressive cardio, which matters because muscle drives your resting metabolism.</li>
+      <li>It is sustainable &mdash; you can do it daily without needing recovery days or risking injury.</li>
+      <li>It compounds: 45 minutes of walking every day is more valuable over a month than 3 brutal sessions followed by exhaustion and a week off.</li>
+      <li>Daily movement outside structured sessions (NEAT &mdash; Non-Exercise Activity Thermogenesis) such as taking the stairs, parking further away, and standing more can add up to several hundred extra calories burned per day without a single gym session.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Understanding Your Training Zones</h3>
+    <p style="font-size:0.88rem; color:#555; margin-bottom:0.6rem;">A rough estimate of your maximum heart rate (MHR) is <strong>220 minus your age</strong>. Use this to gauge effort during exercise.</p>
+    <table class="flow-table">
+      <thead>
+        <tr><th>Zone</th><th>% of Max HR</th><th>How it feels</th><th>Best for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Zone 1</strong> &mdash; Easy</td><td>50&ndash;60%</td><td>Very light; can hold a full conversation easily</td><td>Recovery walks, warm-up, daily steps</td></tr>
+        <tr><td><strong>Zone 2</strong> &mdash; Fat Burn</td><td>60&ndash;70%</td><td>Comfortable; can talk in full sentences but slightly aware of breathing</td><td>Main fat-loss zone; walking, easy cycling</td></tr>
+        <tr><td><strong>Zone 3</strong> &mdash; Aerobic</td><td>70&ndash;80%</td><td>Moderate effort; can speak in short sentences only</td><td>Improved fitness; brisk walking, moderate cycling</td></tr>
+        <tr><td><strong>Zone 4</strong> &mdash; Threshold</td><td>80&ndash;90%</td><td>Hard; speaking is difficult</td><td>Interval work; short bursts only</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.82rem; color:#777; margin-top:0.6rem;">For fat loss at the beginner-to-intermediate level, <strong>Zone 2 is your target</strong> for most sessions. It feels almost too easy &mdash; that is correct.</p>
+  </div>
+
+  <div class="prep-section">
+    <h3>Walking</h3>
+    <p style="font-size:0.88rem; color:#555; margin-bottom:0.6rem;">Walking is underrated. It is low impact, requires no equipment, and is one of the most studied and effective fat-loss tools available.</p>
+    <h3 style="color:#2d6a4f; margin-top:0.8rem;">Daily steps target</h3>
+    <ul>
+      <li>Aim for <strong>8 000&ndash;10 000 steps per day</strong> as a baseline. This does not need to be a single walk &mdash; it accumulates through your day.</li>
+      <li>If you are currently below 5 000 steps, do not jump straight to 10 000. Add 1 000&ndash;1 500 steps per week until you build the habit.</li>
+    </ul>
+    <h3 style="color:#2d6a4f; margin-top:0.8rem;">Structured walk sessions</h3>
+    <table class="flow-table">
+      <thead>
+        <tr><th>Session type</th><th>Duration</th><th>Pace</th><th>Frequency</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Easy morning walk (fasted)</td><td>20&ndash;40 min</td><td>Comfortable Zone 1&ndash;2</td><td>Daily if possible</td></tr>
+        <tr><td>Brisk Zone 2 walk</td><td>40&ndash;60 min</td><td>Purposeful pace, slight effort</td><td>4&ndash;5&times; per week</td></tr>
+        <tr><td>Incline walk (treadmill or hill)</td><td>30&ndash;45 min</td><td>Slow speed, incline 6&ndash;12%</td><td>2&ndash;3&times; per week</td></tr>
+        <tr><td>Post-dinner walk</td><td>15&ndash;20 min</td><td>Easy stroll</td><td>Daily; helps digestion and blood sugar</td></tr>
+      </tbody>
+    </table>
+    <h3 style="color:#2d6a4f; margin-top:0.8rem;">Tips</h3>
+    <ul>
+      <li><strong>Fasted morning walks</strong> (before breakfast, with only water or black coffee) are particularly effective for fat oxidation &mdash; your glycogen stores are low and your body draws on fat earlier.</li>
+      <li>Walk with a purpose: pick a destination, use it as phone-free time, or listen to a podcast. Something that makes you want to go.</li>
+      <li>Incline walking at a slow speed burns significantly more calories than flat walking and is easier on the joints than running.</li>
+      <li>Track your steps with your phone or a watch &mdash; awareness alone tends to increase daily movement.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Trainer / Stationary Cycling</h3>
+    <p style="font-size:0.88rem; color:#555; margin-bottom:0.6rem;">An indoor trainer or stationary bike is excellent for this plan &mdash; joint-friendly, no weather dependency, and easy to control intensity precisely.</p>
+    <h3 style="color:#2d6a4f; margin-top:0.8rem;">Session types</h3>
+    <table class="flow-table">
+      <thead>
+        <tr><th>Session type</th><th>Duration</th><th>Structure</th><th>Frequency</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Steady Zone 2 ride</td><td>40&ndash;60 min</td><td>Consistent comfortable effort throughout; can hold a conversation</td><td>3&ndash;4&times; per week</td></tr>
+        <tr><td>Easy recovery spin</td><td>20&ndash;30 min</td><td>Very low resistance, high cadence (80&ndash;90 rpm), zero strain</td><td>As often as needed; good on rest days</td></tr>
+        <tr><td>Short intervals (beginner HIIT)</td><td>20&ndash;25 min total</td><td>5 min warm-up, then 6&ndash;8 rounds of 30 sec hard / 90 sec easy, 5 min cool-down</td><td>1&ndash;2&times; per week maximum</td></tr>
+        <tr><td>Longer endurance ride</td><td>60&ndash;90 min</td><td>Zone 2 throughout; only once fitness has built up after 4&ndash;6 weeks</td><td>1&times; per week</td></tr>
+      </tbody>
+    </table>
+    <h3 style="color:#2d6a4f; margin-top:0.8rem;">Cadence and resistance guidance</h3>
+    <ul>
+      <li>A cadence of <strong>80&ndash;95 rpm</strong> at moderate resistance is the sweet spot for fat burning and joint health. Higher cadence at lower resistance is easier on your knees than grinding a heavy gear slowly.</li>
+      <li>If you have a power meter or heart rate monitor, target Zone 2 (&lt;70% MHR) for the majority of each session.</li>
+      <li>If you are going by feel: you should be able to breathe through your nose for most of a Zone 2 session.</li>
+    </ul>
+    <h3 style="color:#2d6a4f; margin-top:0.8rem;">Tips</h3>
+    <ul>
+      <li>Put the bike somewhere visible and convenient &mdash; friction is the enemy of consistency.</li>
+      <li>Ride while watching a show or listening to music. The time passes faster and you are more likely to do it.</li>
+      <li>Clip-in or cage pedals are not necessary for light sessions &mdash; any comfortable shoes work on a stationary trainer.</li>
+      <li>Do not skip the warm-up. Even 5 minutes of easy spinning before increasing effort makes the session feel much better.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Other Light Exercise Options</h3>
+    <table class="flow-table">
+      <thead>
+        <tr><th>Activity</th><th>Duration</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Swimming (easy laps)</td><td>30&ndash;45 min</td><td>Full-body, very low joint impact; excellent on days when legs are tired from walking or cycling</td></tr>
+        <tr><td>Light resistance / bodyweight</td><td>30&ndash;40 min</td><td>Bodyweight squats, lunges, push-ups, resistance bands; builds muscle retention without excessive calorie cost; 2&ndash;3&times; per week complements cardio well</td></tr>
+        <tr><td>Yoga / stretching</td><td>20&ndash;40 min</td><td>Reduces cortisol (stress hormone that promotes fat storage), improves sleep quality, good on rest days</td></tr>
+        <tr><td>Rowing machine (easy)</td><td>20&ndash;30 min</td><td>Full-body Zone 2 work; higher calorie burn per minute than cycling at the same effort; good variety</td></tr>
+        <tr><td>Light hiking</td><td>60&ndash;120 min</td><td>Counts as extended Zone 1&ndash;2 walking; excellent weekend activity; terrain adds natural variety</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prep-section">
+    <h3>Suggested Weekly Structure</h3>
+    <p style="font-size:0.88rem; color:#555; margin-bottom:0.6rem;">This is a starting template. Adjust based on your current fitness level &mdash; more important than hitting every session is building the habit of showing up consistently.</p>
+    <table class="flow-table">
+      <thead>
+        <tr><th>Day</th><th>Suggested activity</th><th>Duration</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Monday</td><td>Brisk walk or Zone 2 cycle</td><td>40&ndash;50 min</td></tr>
+        <tr><td>Tuesday</td><td>Easy recovery spin or rest + 8 000 steps through the day</td><td>20&ndash;30 min spin</td></tr>
+        <tr><td>Wednesday</td><td>Zone 2 cycle or incline treadmill walk</td><td>45&ndash;60 min</td></tr>
+        <tr><td>Thursday</td><td>Light bodyweight / resistance bands + short walk</td><td>30&ndash;40 min + 20 min</td></tr>
+        <tr><td>Friday</td><td>Interval cycling (30 sec on / 90 sec easy) or brisk walk</td><td>20&ndash;25 min cycling or 40 min walk</td></tr>
+        <tr><td>Saturday</td><td>Longer walk, hike, or swim &mdash; enjoyable movement</td><td>60&ndash;90 min</td></tr>
+        <tr><td>Sunday</td><td>Rest, stretch/yoga, easy stroll</td><td>20&ndash;30 min stroll</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prep-section">
+    <h3>Fuelling Around Exercise</h3>
+    <ul>
+      <li><strong>Short sessions under 45 minutes</strong>: no extra food needed. Stick to the meal plan as written.</li>
+      <li><strong>Fasted morning walks</strong>: water or black coffee beforehand only. Eat your normal breakfast afterwards.</li>
+      <li><strong>Sessions 45&ndash;75 minutes</strong>: if the session falls more than 3 hours after your last meal, a small snack beforehand can help &mdash; 2 Provitas with cottage cheese or a rice cake with peanut butter is enough.</li>
+      <li><strong>Sessions over 75 minutes</strong>: have a full meal 1.5&ndash;2 hours before and include a moderate carb portion (rice, oats, or potato) in that meal.</li>
+      <li><strong>After exercise</strong>: protein within 1&ndash;2 hours supports recovery. The meal plan already provides this &mdash; no separate protein shake is required unless the session falls in a gap between meals.</li>
+      <li><strong>Do not reward exercise with extra food</strong> unless the session was genuinely long and intense (&gt;75 min). Light exercise burns less than most people expect, and eating back those calories is the most common reason light activity fails to produce fat loss.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Progression Over Time</h3>
+    <ul>
+      <li><strong>Weeks 1&ndash;2</strong>: establish the habit. 3&ndash;4 sessions per week of 20&ndash;40 minutes each. Prioritise showing up over intensity.</li>
+      <li><strong>Weeks 3&ndash;4</strong>: extend sessions by 5&ndash;10 minutes. Add one additional session per week if you feel recovered.</li>
+      <li><strong>Month 2</strong>: introduce one slightly harder session per week (incline walk, interval cycling, or a longer Zone 2 ride).</li>
+      <li><strong>Month 3+</strong>: consider adding light resistance training 2&times; per week alongside cardio. Retaining and building a small amount of muscle is one of the most effective long-term fat-loss strategies because muscle raises your resting metabolic rate.</li>
+      <li>If you feel consistently fatigued, reduce volume before reducing food. Fatigue usually means too much exercise or not enough sleep, not too much food.</li>
+    </ul>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════
+     OVERVIEW (shared)
+════════════════════════════════════════════ -->
 <section id="overview">
   <h2>Kelfit Overview Summary</h2>
 
   <div class="prep-section">
     <h3>Goal</h3>
-    <p style="font-size:0.9rem; color:#444;">This plan is designed for sustainable fat loss: enough protein to support muscle retention, enough carbohydrates to keep training and daily energy practical, and enough vegetable volume to improve fullness without making the plan feel restrictive.</p>
+    <p style="font-size:0.9rem; color:#444;">Both plans are designed for sustainable fat loss: enough protein to support muscle retention, enough carbohydrates to keep training and daily energy practical, and enough vegetable volume to improve fullness without making the plan feel restrictive.</p>
   </div>
 
   <div class="prep-section">
@@ -651,10 +1226,20 @@
   <div class="prep-section">
     <h3>Meal Prep System</h3>
     <ul>
-      <li>Dinner is cooked as two portions where practical, with the second portion becoming lunch the next day.</li>
+      <li>Dinner is always cooked as two portions &mdash; the second portion becomes lunch the next day.</li>
       <li>USN Diet Fuel Ultralean is included on selected days for convenience, not as the foundation of the whole plan.</li>
-      <li>Provitas, rice cakes, Greek yogurt, cottage cheese, fruit, eggs, and biltong provide repeatable snack options.</li>
-      <li>Airfryer and non-airfryer meals are both included so the plan stays usable across different cooking setups.</li>
+      <li>Provitas, rice cakes, Greek yogurt, cottage cheese, fruit, eggs, and biltong provide repeatable snack options across both weeks.</li>
+      <li>Airfryer and stovetop meals are both included so the plan stays usable across different cooking setups.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Rotating Between Week 1 and Week 2</h3>
+    <ul>
+      <li>Week 2 rotates the protein sources &mdash; trout, ostrich mince, and turkey breast replace some of Week 1&rsquo;s proteins to reduce repetition while keeping the same structure.</li>
+      <li>Run Week 1 and Week 2 on alternate weeks for variety without needing to plan new meals each time.</li>
+      <li>Both weeks share the same shopping staples (oats, Greek yogurt, cottage cheese, eggs, rice, quinoa, vegetables), so pantry stock carries over.</li>
+      <li>Individual days can be swapped freely between weeks &mdash; both plans use the same caloric structure.</li>
     </ul>
   </div>
 
@@ -669,15 +1254,176 @@
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════════
+     DRINKS (shared)
+════════════════════════════════════════════ -->
+<section id="drinks">
+  <h2>Drinks Guide</h2>
+  <p style="margin-bottom:1.2rem; font-size:0.88rem; color:#555;">What you drink matters almost as much as what you eat. This guide covers every common drink and how it fits &mdash; or doesn&rsquo;t &mdash; into the Kelfit plan.</p>
+
+  <div class="prep-section">
+    <h3>Water &mdash; the foundation</h3>
+    <ul>
+      <li>Aim for <strong>2&ndash;3 litres per day</strong> minimum; more on training days or in hot weather.</li>
+      <li>Start each morning with a large glass (300&ndash;500ml) before anything else &mdash; it reduces false hunger signals.</li>
+      <li>Keep a bottle visible during the day; most people underdrink simply because it is out of sight.</li>
+      <li>Plain sparkling or still water are both fine &mdash; choose whichever you will actually drink more of.</li>
+      <li>Add a slice of lemon, cucumber, or a few mint leaves if plain water feels unappealing &mdash; zero calories and it works.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Coffee</h3>
+    <ul>
+      <li><strong>Black coffee</strong> &mdash; best option. Zero calories, mild appetite suppression, and small fat oxidation benefit. Drink freely up to 2&ndash;3 cups per day.</li>
+      <li><strong>With a small splash of low-fat milk (30&ndash;50ml)</strong> &mdash; adds roughly 15&ndash;25 kcal and about 1.5g protein. Perfectly fine as a daily habit.</li>
+      <li><strong>With full-cream milk or creamer</strong> &mdash; adds up quickly across multiple cups. Either switch to low-fat milk or count it as part of your dairy intake for the day.</li>
+      <li><strong>Cappuccinos and flat whites at a caf&eacute;</strong> &mdash; a standard milk-based coffee is 80&ndash;130 kcal. One per day is manageable; two or more per day can quietly stall progress.</li>
+      <li><strong>Avoid</strong>: sugar, flavoured syrups, whipped cream, caramel or vanilla lattes. These turn a zero-calorie drink into a dessert.</li>
+      <li>If you train in the morning, a black coffee 20&ndash;30 minutes beforehand works well as a low-cost pre-workout.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Rooibos Tea &mdash; ideal everyday drink</h3>
+    <ul>
+      <li>Zero calories, zero caffeine, high in antioxidants, and it is a genuine SA staple &mdash; drink as much as you like.</li>
+      <li>A small splash of low-fat milk is fine; just skip the sugar.</li>
+      <li>Works particularly well in the evening when you want something warm without the caffeine keeping you awake.</li>
+      <li>Red espresso (rooibos concentrate) is a good coffee alternative if you are trying to cut back on caffeine.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>English (Black) Tea</h3>
+    <ul>
+      <li>Black tea brewed plain is near zero calories and a good antioxidant source.</li>
+      <li>A small splash of low-fat milk (30ml) is the traditional way and keeps calories negligible.</li>
+      <li>Contains caffeine &mdash; roughly 40&ndash;70mg per cup (less than coffee). Stick to 2&ndash;3 cups per day, especially if you are sensitive to caffeine or drink it in the afternoon.</li>
+      <li>Avoid sweetening with sugar; use cinnamon or a small amount of unsweetened vanilla if you need flavour.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Green Tea</h3>
+    <ul>
+      <li>Excellent choice &mdash; zero calories plain, good antioxidant profile (EGCG), and light caffeine (25&ndash;40mg per cup).</li>
+      <li>There is modest research support for a small boost to fat oxidation at rest, particularly when consumed consistently.</li>
+      <li>Best drunk as is; adding milk reduces the antioxidant absorption. A slice of lemon is a good addition instead.</li>
+      <li>2&ndash;3 cups per day is a sensible amount.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Chai Tea</h3>
+    <ul>
+      <li><strong>Spiced black tea brewed plain</strong> (cinnamon, cardamom, ginger, clove) &mdash; zero calories, great flavour. Drink freely.</li>
+      <li><strong>Chai brewed with low-fat milk and no sugar</strong> &mdash; adds protein and calcium, still a reasonable choice. Count the milk portion.</li>
+      <li><strong>Chai latte (caf&eacute;-style or from a pod/sachet)</strong> &mdash; often contains 10&ndash;20g of added sugar and full-cream milk. This is effectively a dessert drink. Either make it yourself with low-fat milk and no sweetener, or treat it as an occasional extra rather than a daily habit.</li>
+      <li>Pre-made chai concentrate products (e.g. Oregon Chai) are usually very high in sugar &mdash; check the label before using.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Other Herbal &amp; Fruit Teas</h3>
+    <ul>
+      <li>Chamomile, peppermint, ginger, hibiscus, honeybush, nettle &mdash; all zero calories and unlimited.</li>
+      <li>Ginger tea is particularly useful for digestion and appetite management.</li>
+      <li>Avoid <strong>commercially sweetened fruit teas or iced teas</strong> (e.g. Lipton Ice Tea, Nestea) &mdash; these are sugar water dressed up as tea and can contain 20&ndash;35g sugar per bottle.</li>
+      <li>Homemade iced rooibos or green tea chilled in the fridge with lemon and mint is a zero-calorie alternative to commercial iced tea.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Drinks to Avoid or Limit Strictly</h3>
+    <table class="flow-table">
+      <thead>
+        <tr><th>Drink</th><th>Why it's a problem</th><th>What to do instead</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fruit juice (all varieties)</td><td>High sugar, no fibre, spikes insulin rapidly</td><td>Eat the whole fruit instead</td></tr>
+        <tr><td>Regular soft drinks / sodas</td><td>30&ndash;40g sugar per 330ml, zero nutrition</td><td>Sparkling water with lemon</td></tr>
+        <tr><td>Energy drinks (Red Bull, Monster)</td><td>High sugar and caffeine; the sugar-free versions have excessive caffeine</td><td>Black coffee pre-workout</td></tr>
+        <tr><td>Flavoured milk drinks &amp; smoothie packs</td><td>Often 30&ndash;50g sugar; marketed as healthy</td><td>Plain Greek yogurt with water or low-fat milk blended with fruit and whey</td></tr>
+        <tr><td>Alcohol (general)</td><td>Slows fat metabolism, disrupts sleep and recovery, adds empty calories</td><td>See alcohol section below</td></tr>
+        <tr><td>Commercially sweetened chai / coffee syrups</td><td>High sugar hidden in what seems like a hot drink</td><td>Brew plain and add cinnamon</td></tr>
+        <tr><td>Coconut water</td><td>Natural but contains 12&ndash;15g sugar per 330ml; treat as a snack, not hydration</td><td>Water; only use coconut water after a long intense session</td></tr>
+        <tr><td>Sports drinks (Powerade, Energade)</td><td>Designed for intense endurance athletes, not fat loss</td><td>Water with a pinch of salt on very long training days</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="prep-section">
+    <h3>Alcohol</h3>
+    <ul>
+      <li>Alcohol <strong>directly pauses fat metabolism</strong> &mdash; your body prioritises clearing alcohol before processing anything else, so fat burning stops while it is in your system.</li>
+      <li>A standard 340ml beer is roughly 150 kcal; a 175ml glass of wine is 120&ndash;150 kcal; a single spirit (35ml) with full-sugar mixer is 120&ndash;180 kcal.</li>
+      <li>Alcohol also reduces sleep quality and recovery, increases the likelihood of poor food choices the next day, and raises cortisol, which can increase fat storage around the midsection.</li>
+      <li><strong>If you do drink</strong>, the lower-impact options are: dry red or white wine (1 glass), spirits (brandy, whisky, vodka, rum) with sparkling water or diet soda (no sugary mixer), or a light beer.</li>
+      <li>Avoid: sweet ciders, cocktails with juice or syrup, shooters, and more than 1&ndash;2 drinks at a time.</li>
+      <li>Practical rule: treat a drinking occasion as a choice to pause progress for that day, limit food fat and carb intake on the same day, increase water intake before and after, and return to plan the next morning without guilt.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Diet / Zero-Sugar Drinks</h3>
+    <ul>
+      <li>Zero-calorie technically &mdash; Coke Zero, Pepsi Max, sugar-free Fanta, etc. They will not break a calorie deficit on their own.</li>
+      <li>However, artificial sweeteners (aspartame, sucralose, acesulfame-K) maintain a sweet preference and can trigger cravings for real sugar later in the day in some people.</li>
+      <li>Use them as a transition tool to cut out regular sodas, but work towards preferring sparkling water or plain drinks over time.</li>
+      <li>If you find they are increasing your appetite or sweet cravings, drop them. If they make no difference, occasional use is fine.</li>
+    </ul>
+  </div>
+
+  <div class="prep-section">
+    <h3>Quick Reference</h3>
+    <table class="flow-table">
+      <thead>
+        <tr><th>Drink</th><th>Status</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Water (still or sparkling)</td><td style="color:#2d6a4f; font-weight:700;">Unlimited</td><td>Aim for 2&ndash;3L per day</td></tr>
+        <tr><td>Rooibos tea (plain)</td><td style="color:#2d6a4f; font-weight:700;">Unlimited</td><td>Ideal evening drink, zero caffeine</td></tr>
+        <tr><td>Herbal / fruit tea (plain, unsweetened)</td><td style="color:#2d6a4f; font-weight:700;">Unlimited</td><td>Chamomile, peppermint, ginger, etc.</td></tr>
+        <tr><td>Black coffee</td><td style="color:#40916c; font-weight:700;">2&ndash;3 cups/day</td><td>No sugar; good pre-workout option</td></tr>
+        <tr><td>Green tea</td><td style="color:#40916c; font-weight:700;">2&ndash;3 cups/day</td><td>No milk, squeeze of lemon is fine</td></tr>
+        <tr><td>Black / English tea (plain)</td><td style="color:#40916c; font-weight:700;">2&ndash;3 cups/day</td><td>Small milk splash okay, no sugar</td></tr>
+        <tr><td>Chai tea (home-brewed, no sugar)</td><td style="color:#40916c; font-weight:700;">Moderate</td><td>Avoid commercial sweet versions</td></tr>
+        <tr><td>Coffee / rooibos with low-fat milk</td><td style="color:#40916c; font-weight:700;">Moderate</td><td>Count as part of dairy intake</td></tr>
+        <tr><td>Diet / zero sodas</td><td style="color:#b5860d; font-weight:700;">Occasional</td><td>Transition tool; prefer plain water long-term</td></tr>
+        <tr><td>Alcohol</td><td style="color:#b5860d; font-weight:700;">Occasional / limit</td><td>Dry wine or spirits with soda water if at all</td></tr>
+        <tr><td>Fruit juice, cordials</td><td style="color:#c0392b; font-weight:700;">Avoid</td><td>High sugar, no fibre benefit</td></tr>
+        <tr><td>Regular sodas &amp; sweet mixers</td><td style="color:#c0392b; font-weight:700;">Avoid</td><td>Empty calories, insulin spike</td></tr>
+        <tr><td>Energy drinks (sugared)</td><td style="color:#c0392b; font-weight:700;">Avoid</td><td>Use black coffee instead</td></tr>
+        <tr><td>Caf&eacute;-style chai lattes</td><td style="color:#c0392b; font-weight:700;">Avoid</td><td>Treat as dessert; high sugar and milk calories</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</section>
+
 <button id="back-to-top" title="Back to top" aria-label="Back to top">&#8679;</button>
 
 <script>
   function showTab(id, btn) {
     document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('nav.main-nav button').forEach(b => b.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     btn.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function navigateTo(id) {
+    const btn = document.querySelector('nav.main-nav button[data-tab="' + id + '"]');
+    showTab(id, btn);
+  }
+
+  function showWeek(sectionId, weekPanelId, btn) {
+    const section = document.getElementById(sectionId);
+    section.querySelectorAll('.week-panel').forEach(p => p.classList.remove('active'));
+    section.querySelectorAll('.week-nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById(weekPanelId).classList.add('active');
+    btn.classList.add('active');
   }
 
   const btt = document.getElementById('back-to-top');
