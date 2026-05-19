@@ -130,7 +130,10 @@
       color: #1b4332;
       border-radius: 0 6px 6px 0;
     }
-    .prep-note strong { display: block; font-size: 0.75rem; text-transform: uppercase; color: #40916c; margin-bottom: 2px; }
+    .prep-note-title { cursor: pointer; font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: #40916c; user-select: none; list-style: none; }
+    .prep-note-title::-webkit-details-marker { display: none; }
+    .prep-note-title::marker { display: none; }
+    .prep-note[open] .prep-note-title { margin-bottom: 0.3rem; }
 
     .recipe-note {
       margin-top: 0.7rem;
@@ -526,7 +529,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,640 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Season chicken with lemon juice, garlic, mixed herbs, salt, pepper, and a light spray of oil.</li><li>Airfry at 180&deg;C for 14&ndash;18 min, turning once, until cooked through.</li><li>Roast sweet potato, broccoli, and carrots with paprika, herbs, salt, and pepper until tender.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the chicken, sweet potato, and vegetables; eat one portion for dinner tonight and reserve the second for Day 2 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the chicken, sweet potato, and vegetables; eat one portion for dinner tonight and reserve the second for Day 2 lunch.</details>
         </div>
       </div>
 
@@ -548,7 +551,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,680 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Brown mince in a non-stick pan with onion, garlic, breyani spice or mild curry powder, cumin, coriander, salt, and pepper.</li><li>Add tomato onion mix and a splash of water; simmer 8&ndash;10 min until thick.</li><li>Stir through cooked rice and serve with steamed or sauteed green beans and courgettes.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the mince, rice, and vegetables; eat one portion for dinner tonight and reserve the second for Day 3 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the mince, rice, and vegetables; eat one portion for dinner tonight and reserve the second for Day 3 lunch.</details>
         </div>
       </div>
 
@@ -570,7 +573,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,715 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Season hake with lemon juice, garlic, parsley or mixed herbs, salt, and pepper.</li><li>Bake at 180&deg;C for 12&ndash;15 min until the fish flakes easily.</li><li>Serve with boiled or roasted baby potatoes and salad; measure olive oil dressing separately.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Bake 2 hake fillets with 2&times; the potatoes and salad prep; eat one full portion for dinner tonight and reserve the second for Day 4 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Bake 2 hake fillets with 2&times; the potatoes and salad prep; eat one full portion for dinner tonight and reserve the second for Day 4 lunch.</details>
         </div>
       </div>
 
@@ -592,7 +595,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,645 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Slice chicken into strips and season with peri-peri spice, garlic, lemon juice, salt, and pepper.</li><li>Airfry at 180&deg;C for 10&ndash;14 min, shaking halfway, until cooked through.</li><li>Roast butternut and courgettes with paprika and herbs; serve with measured cooked quinoa.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the peri-peri chicken, quinoa, and vegetables; eat one portion for dinner tonight and reserve the second for Day 5 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the peri-peri chicken, quinoa, and vegetables; eat one portion for dinner tonight and reserve the second for Day 5 lunch.</details>
         </div>
       </div>
 
@@ -614,7 +617,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,730 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Season salmon with lemon juice, mixed herbs, salt, and pepper.</li><li>Sear in a non-stick pan, skin-side down first, for 3&ndash;4 min per side until just cooked.</li><li>Wilt spinach and steam green beans; serve with measured cooked quinoa.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the salmon, quinoa, and vegetables; eat one portion for dinner tonight and reserve the second for Day 6 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the salmon, quinoa, and vegetables; eat one portion for dinner tonight and reserve the second for Day 6 lunch.</details>
         </div>
       </div>
 
@@ -636,7 +639,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,705 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Season steak with salt, pepper, garlic, and a little paprika or braai spice.</li><li>Braai or pan-sear 3&ndash;5 min per side, depending on thickness; rest before slicing.</li><li>Roast potato wedges and steam gem squash; add salad vegetables to reach the full vegetable portion.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the steak, wedges, and vegetables; eat one portion for dinner tonight and reserve the second for Day 7 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the steak, wedges, and vegetables; eat one portion for dinner tonight and reserve the second for Day 7 lunch.</details>
         </div>
       </div>
 
@@ -658,7 +661,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,680 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Season chicken strips with garlic, mixed herbs, lemon juice, salt, and pepper.</li><li>Bake at 190&deg;C for 16&ndash;20 min until cooked through.</li><li>Roast cauliflower, carrots, and broccoli with herbs and a light spray of oil; serve with measured brown rice.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Dinner can be doubled to create a ready-made lunch for the following Monday.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Dinner can be doubled to create a ready-made lunch for the following Monday.</details>
         </div>
       </div>
 
@@ -687,7 +690,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,480 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Coat hake with lemon juice, garlic, parsley or mixed herbs, salt, pepper, and a small amount of crushed Provita crumbs if you want a crust.</li><li>Airfry at 180&deg;C for 10&ndash;13 min until flaky.</li><li>Roast baby potatoes and steam broccoli and green beans; season with lemon and herbs.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the hake, baby potatoes, and vegetables; eat one full portion for dinner tonight and reserve the second for Day 2 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the hake, baby potatoes, and vegetables; eat one full portion for dinner tonight and reserve the second for Day 2 lunch.</details>
         </div>
       </div>
 
@@ -708,9 +711,9 @@
             <div class="cal-row"><span>Dinner</span><span>~490 kcal</span></div>
             <div class="cal-total"><span>Day Total</span><span>~1,545 kcal</span></div>
           </details>
-          <div class="prep-note"><strong>Tomato &amp; Herb Sauce</strong>Brown the mince, add 1&ndash;2 crushed garlic cloves and a small diced onion, then pour in 1 can (400g) chopped or crushed tomatoes. Stir in 1 tsp dried mixed herbs, salt and pepper, and simmer 10&ndash;15 min until thickened. Shortcut: use a low-sugar jarred tomato pasta sauce (under 5g sugar per 100g) with dried herbs stirred in. Avoid sauces with added cream or sugar.</div>
+          <details class="prep-note"><summary class="prep-note-title">Tomato &amp; Herb Sauce</summary>Brown the mince, add 1&ndash;2 crushed garlic cloves and a small diced onion, then pour in 1 can (400g) chopped or crushed tomatoes. Stir in 1 tsp dried mixed herbs, salt and pepper, and simmer 10&ndash;15 min until thickened. Shortcut: use a low-sugar jarred tomato pasta sauce (under 5g sugar per 100g) with dried herbs stirred in. Avoid sauces with added cream or sugar.</details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Brown mince with onion, garlic, mixed herbs, salt, and pepper in a non-stick pan.</li><li>Add tomato and herb sauce and simmer until thick and glossy.</li><li>Serve over measured basmati rice with sauteed courgettes and carrots.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the mince, rice, and vegetables; eat one portion for dinner tonight and reserve the second for Day 3 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the mince, rice, and vegetables; eat one portion for dinner tonight and reserve the second for Day 3 lunch.</details>
         </div>
       </div>
 
@@ -732,7 +735,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,750 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Season trout with lemon juice, garlic, herbs, salt, and pepper.</li><li>Pan-sear in a non-stick pan for 3&ndash;4 min per side until just cooked.</li><li>Roast sweet potato cubes and serve with wilted spinach and steamed green beans.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the trout, sweet potato, and vegetables; eat one full portion for dinner tonight and reserve the second for Day 4 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the trout, sweet potato, and vegetables; eat one full portion for dinner tonight and reserve the second for Day 4 lunch.</details>
         </div>
       </div>
 
@@ -754,7 +757,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,605 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Slice pork fillet into strips and season with peri-peri spice, garlic, lemon juice, salt, and pepper.</li><li>Airfry at 180&deg;C for 10&ndash;12 min, shaking halfway, until cooked through.</li><li>Roast butternut and courgettes; serve with measured cooked brown rice.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the pork strips, rice, and vegetables; eat one portion for dinner tonight and reserve the second for Day 5 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the pork strips, rice, and vegetables; eat one portion for dinner tonight and reserve the second for Day 5 lunch.</details>
         </div>
       </div>
 
@@ -776,7 +779,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,720 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Season steak with salt, pepper, garlic, and braai spice or paprika.</li><li>Braai or pan-sear 3&ndash;5 min per side, then rest before slicing.</li><li>Serve with roasted potato wedges and salad; measure olive oil dressing separately.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the steak, wedges, and salad; eat one portion for dinner tonight and reserve the second for Day 6 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the steak, wedges, and salad; eat one portion for dinner tonight and reserve the second for Day 6 lunch.</details>
         </div>
       </div>
 
@@ -798,7 +801,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,715 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Season chicken with lemon juice, garlic, mixed herbs, salt, and pepper.</li><li>Bake at 190&deg;C for 18&ndash;22 min until cooked through, then rest before slicing.</li><li>Roast cauliflower, cherry tomatoes, and courgettes; serve with measured cooked quinoa.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Weights above are per portion &mdash; cook double. Prepare 2&times; the chicken, quinoa, and vegetables; eat one portion for dinner tonight and reserve the second for Day 7 lunch.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Weights above are per portion &mdash; cook double. Prepare 2&times; the chicken, quinoa, and vegetables; eat one portion for dinner tonight and reserve the second for Day 7 lunch.</details>
         </div>
       </div>
 
@@ -820,7 +823,7 @@
             <div class="cal-total"><span>Day Total</span><span>~1,745 kcal</span></div>
           </details>
           <details class="recipe-note"><summary>Quick recipe</summary><ol><li>Brown mince with onion, cumin, coriander, garlic, salt, and pepper.</li><li>Add broccoli and a splash of water; cover briefly until tender, then stir in baby spinach to wilt.</li><li>Serve over measured basmati rice and adjust seasoning with lemon or vinegar if needed.</li></ol></details>
-          <div class="prep-note"><strong>Meal Prep</strong>Dinner can be doubled to create a ready-made lunch for the following Monday.</div>
+          <details class="prep-note"><summary class="prep-note-title">Meal Prep</summary>Dinner can be doubled to create a ready-made lunch for the following Monday.</details>
         </div>
       </div>
 
